@@ -19,7 +19,7 @@ plugins:             [jekyll-paginate, jekyll-sitemap, jekyll-feed, jekyll-seo-t
 
 # Customise atom feed settings (this is where Jekyll-Feed gets configuration information)
 title: 'pSBVB Polyploid Sequence Based Virtual Breeding.'
-description:' A flexible, efficient gene dropping algorithm to simulate sequence based population data and complex traits.'
+description: 'A flexible, efficient gene dropping algorithm to simulate sequence based population data and complex traits.'
 author: 'M P Enciso'
 # RSS 2.0 can be used instead of Atom by uncommenting following two lines
 #feed:
