@@ -12,7 +12,7 @@
 paginate:            20
 
 # Build settings
-markdown:            kramdown
+markdown:            maruku
 highlighter:         rouge
 permalink:           none
 plugins:             [jekyll-paginate, jekyll-sitemap, jekyll-feed, jekyll-seo-tag]
