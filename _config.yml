@@ -18,6 +18,10 @@ permalink:           none
 plugins:             [jekyll-paginate, jekyll-sitemap, jekyll-feed, jekyll-seo-tag]
 
 # Customise atom feed settings (this is where Jekyll-Feed gets configuration information)
+layout: post
+category: misc
+tags: [test]
+use_math: true
 title: 'pSBVB Polyploid Sequence Based Virtual Breeding.'
 description: 'A flexible, efficient gene dropping algorithm to simulate sequence based population data and complex traits.'
 author: 'M P Enciso'
