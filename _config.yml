@@ -1,5 +1,4 @@
 # Site Build Settings
-
 # Jekyll-paginate-v2 configuration
 #  pagination:
 #   enabled: true
@@ -9,9 +8,8 @@
 #   limit: 0
 #   sort_field: 'date'
 #   sort_reverse: true
-
 # jekyll-paginate configuration
-paginate:            5
+paginate:            20
 
 # Build settings
 markdown:            kramdown
@@ -20,8 +18,9 @@ permalink:           none
 plugins:             [jekyll-paginate, jekyll-sitemap, jekyll-feed, jekyll-seo-tag]
 
 # Customise atom feed settings (this is where Jekyll-Feed gets configuration information)
-title:		           'Lagrange'
-description:	       'a minimalist Jekyll theme'
+title: 'pSBVB Polyploid Sequence Based Virtual Breeding.'
+author: 'M P Enciso'
+description:	       ' A flexible, efficient gene dropping algorithm to simulate sequence based population data and complex traits.'
 author:              'Paul Le'
 
 # RSS 2.0 can be used instead of Atom by uncommenting following two lines
