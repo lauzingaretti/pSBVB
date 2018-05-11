@@ -350,7 +350,8 @@ M. Pérez-Enciso, N. Forneris, G. de los Campos, A. Legarra. An evaluation of se
 ntrait
 
 ```PLOIDY```
-p
+
+ P
 
 ``` MAXNCHR```      !—> max no. of chromosomes [23]
 maxnchr
