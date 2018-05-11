@@ -30,7 +30,7 @@ Polyploid sequence based virtual breeding (**pSBVB**) is a modification of **SBV
 ### Installation
 
 The source code, manual and examples can be obtained from
-<https://github.com/mperezenciso/sbvb0>
+<https://github.com/lauzingaretti/pSBVB>
 
 To compile:
 
@@ -74,7 +74,7 @@ sudo apt-get install libblas-dev liblapack-dev
 
 The source code, manual and examples can be obtained from:
 
-<https://github.com/mperezenciso/sbvb0>
+<https://github.com/mperezenciso/pSBVB>
 <https://github.com/lauzingaretti/pSBVB>
 To compile:
 ```gfortran -O3 kind.f90 ALliball.f90 aux_sub11.f90 psbvb.f90 -o sbvb -lblas ```
