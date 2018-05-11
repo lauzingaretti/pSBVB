@@ -217,16 +217,14 @@ code.language-yaml {
   <p align="center">
   <h3 style="color: rgb(91,154,94); align=center;font-weight: bold; font-size: 30px;"> pSBVB: Polyploid Sequence Based Virtual Breeding.</h3></p>
  
-      <p align="center">
-    <p style="color:black;">
-A flexible, efficient gene dropping algorithm to simulate sequence based population data and complex traits.
- <p style="color:black;">
-  Miguel Pérez-Enciso
- <p align="center">
-    miguel.perez@uab.es
-<p align="center">
-With collaborations from N. Forneris, G. de los Campos, A. Legarra and L Zingaretti
-<p>📝</p>
+      <p align="center"> A flexible, efficient gene dropping algorithm to simulate sequence based population data and complex traits.</p>
+ 
+      <p style="color:black;">
+        <p align="center"> Miguel Pérez-Enciso</p>
+      <p align="center">     miguel.perez@uab.es</p>
+ <p align="center">with collaborations from N. Forneris, G. de los Campos, A. Legarra and L Zingaretti</p>
+
+      <p>📝</p>
 <h3>Purpose</h3>
 <p>Polyploid sequence based virtual breeding (<strong>pSBVB</strong>) is a modification of <strong>SBVB</strong> software (Pérez-Enciso et al. 2017) that allows simulating traits of an arbitrary genetic complexity in polyploids. Its goal is to simulate complex traits and genotype data starting with a <code>vcf</code> file that contains the genotypes of founder individuals and following a given pedigree. The main output are the genotypes of all individuals in the pedigree and/or molecular relationship matrices (GRM) using all sequence or a series of SNP lists, together with phenotype data. The program implements very efficient algorithms where only the recombination breakpoints for each individual are stored, therefore allowing the simulation of thousands of individuals very quickly. Most of computing time is actually spent in reading the <code>vcf</code> file. Future developments will optimize this step by reading and writing binary mapped files. The <code>vcf</code> file may not contain missing genotypes and is assumed to be phased.</p>
 <h3 class="mume-header" id="main-features">Main features</h3>
