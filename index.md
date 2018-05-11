@@ -1,4 +1,209 @@
 
+---
+title: pSBVB Polyploid Sequence Based Virtual Breeding.
+author: M P Enciso
+markdown-pdf.scale: 0.5
+fontsize: 11pt
+geometry: margin=1in
+export_on_save:
+output:
+  pandoc: true
+  md_document:
+    variant: markdown_github
+  pdf_document:
+    pandoc_args: [
+      "--no-tex-ligatures"
+    ]
+  ebook: true
+---
+
+<h3 style="text-align: center;" markdown="1">pSBVB: Polyploid Sequence Based Virtual Breeding.</h3>
+
+ <p align="center">
+A flexible, efficient gene dropping algorithm to simulate sequence based population data and complex traits.
+ <p align="center">
+  Miguel Pérez-Enciso
+ <p align="center">
+ <miguel.perez@uab.es>
+
+<p align="center">
+With collaborations from N. Forneris, G. de los Campos, A. Legarra and L Zingaretti
+
+### Purpose
+Polyploid sequence based virtual breeding (**pSBVB**) is a modification of **SBVB** software (Pérez-Enciso et al. 2017) that allows simulating traits of an arbitrary genetic complexity in polyploids. Its goal is to simulate complex traits and genotype data starting with a ```vcf``` file that contains the genotypes of founder individuals and following a given pedigree. The main output are the genotypes of all individuals in the pedigree and/or molecular relationship matrices (GRM) using all sequence or a series of SNP lists, together with phenotype data. The program implements very efficient algorithms where only the recombination breakpoints for each individual are stored, therefore allowing the simulation of thousands of individuals very quickly. Most of computing time is actually spent in reading the ```vcf``` file. Future developments will optimize this step by reading and writing binary mapped files. The ```vcf``` file may not contain missing genotypes and is assumed to be phased.
+
+### Main features
+
+*Any number of traits.
+*Tool adapted to work with both, auto and allo-polyploid organisms.
+*Any number of QTNs, trait specific.
+*Any number of additive and dominant effects.
+*Can generate a correlation matrix to modelate meiosis in polyploid especies.
+*Can generate correlated allelic effects and frequencies.
+*Efficient algorithms to generate haplotypes and sample SNP genotypes.
+*Computes genomic relationship matrices for any number of SNP arrays simultaneously.
+*It allow to compute Genomic relationship matrix in several ways.
+*Any number of chromosomes, allows for sex chromosomes and varying local recombination rates, that can be sex specific.
+
+### Installation
+
+The source code, manual and examples can be obtained from
+<https://github.com/mperezenciso/sbvb0>
+
+To compile:
+
+```gfortran -O3 kind.f90 ALliball.f90 aux_sub11.f90 psbvb.f90 -o sbvb -lblas ```
+
+or
+
+```make ```
+
+To install in  /usr/local/bin
+
+```sudo make install```
+
+The program requires **blas** libraries but these are standard in any unix or OS mac system. We have tested **pSBVB** only in linux with ```gfortran``` compiler; intel ifort seems not working, but ```gfortran``` in mac OS looks ok.
+
+### Usage
+
+To run (assuming```vcf``` i file is compressed):
+
+```zcat file.vcf.gz | perl vcf2tped2.pl -hap | cut -d ' ' -f 1,4- | psbvb -isbvb.par```
+
+Where ```sbvb.par``` is the parameter file (details follow). The intermediate steps are simply for **pSBVB** to read genotypes in suitable format, that is,
+
+**allele1_snp1_ind1 allele2_snp1_ind1 allele3_snp1_ind1 ... allelep_snp1_ind1 allele1_snp1_ind2 allele2_snp1_ind2 allele3_snp1_ind2 ... allelep_snp1_indp**
+
+**allele1_snp2_ind1 allele2_snp2_ind1 allele3_snp2_ind1 ... allelep_snp2_ind1 allele1_snp2_ind2 allele2_snp2_ind2 allele3_snp2_ind2 ... allelep_snp2_indp**
+
+
+with alleles coded as _0/1_. To run the program with the same random seed:
+
+```… | psbvb –isbvb.par –seed iseed ```
+
+where iseed is an integer number.
+
+### Parameter file
+The parameter file controls all **pSBVB** behavior. It consists of a list of sections in UPPER CASE (in any order) followed in the next line by the required data, e.g.,
+
+**QTNFILE**
+
+sbvb.qtl
+
+tells the program that **QTN** specifications are in sbvb.qtl file. Comments can be mixed starting with # or ! A full list of options in the parameter file is in Appendix 1. In the following, we list the main ones.
+
+**PLOIDY**
+
+hCompared to SBVB (designed for diploid organisms), **pSBVB** allows simulating meiosis in autopolyploid or allopolyploid species. For that, **pSBVB** requires a matrix of dimension $h\times h$, must be consecutive integers $h$ is the ploidy level  specifying the pairing factors described above. To specify this matrix you must insert in file parameter:
+
+
+tells the program that the organisms used have ploidy $h$.
+
+Compared to SBVB (designed for diploid organisms), **pSBVB** allows simulating meiosis in autopolyploid or allopolyploid species. For that, **pSBVB** requires a matrix of dimension $h\times h$, must be consecutive integers $h$ is the ploidy level  specifying the pairing factors described above. To specify this matrix you must insert in file parameter:
+
+**RHOMATRIX**
+
+Verrrrrrr como se ponía esta matriz de recombinación
+
+### Specifying genetic architecture
+If more than one trait is generated, then use
+
+**NTRAIT**
+
+ntraits
+
+in parameter file. Otherwise this section is not needed. **pSBVB** requires the user to provide the list of causal SNPs (**QTNs**) as specified in **QTNFILE** section. The format of the QTN file is the next:
+
+| i_chrom | i_pos |
+| :----------- | :------: |
+
+or
+
+| <span style="font-size: 6pt" >i_chrom </span> |  <span style="font-size: 6pt" >i_pos</span> | <span style="font-size: 6pt" > add_eff_Trait_1 </span>|  <span style="font-size: 6pt" > add_eff_Trait_2 </span>|  <span style="font-size: 6pt" >... </span>|  <span style="font-size: 6pt" > add_eff_Trait_n </span>|
+| :----------- | :------: | :--------: | :----------------: | :--: | ------------------|
+
+or to additive and dominant effects:
+| <span style="font-size: 6pt" >i_chrom </span> | <span style="font-size: 6pt" >i_pos </span> | <span style="font-size: 6pt" >add_eff_Trait_1 </span> | <span style="font-size: 6pt" >add_eff_Trait_2 </span> | <span style="font-size: 6pt" > </span>| <span style="font-size: 6pt" > add_eff_Trait_n </span> | <span style="font-size: 6pt" > dom_eff_Trait_1 </span> | <span style="font-size: 6pt" > dom_eff_Trait_2 </span> | ... | <span style="font-size: 6pt" > dom_eff_Trait_n </span> |
+| ----------- | ------ | -------- | :---------------- | -- | ------------------| -------------------| ------------------ | --- | -------------------|
+
+<span style="color:green; font-family:Georgia; font-weight: bold; background-color: #FFEF12 ">NOTE:</span>  The bellow file, must separated by spaces, and where _ichr_ is chromosome and _ipos_ is position in base pair, _add_eff_ is additive effect, i.e the effect of homozygous alleles and _dom_eff_ is the heterozygous effect.
+
+<span style="color:red; font-family:Georgia; font-weight: bold; background-color: #FFFF00 ">WARNING:</span>  **QTN** position must coincide with one **SNP** position in the ```vcf``` file, otherwise it is not considered.
+
+If QTN effects are not provided, they can be simulated specifying
+
+**QTNDISTA**
+
+u lower_bound upper_bound | n mu var | g s b
+
+and
+
+**QTNDISTD**
+
+u lower_bound upper_bound | n mu var | g s b
+
+in parameter file.
+where 'u' means effects are sampled from a uniform distribution $U\sim(lower_{bound}, upper_{bound})$, 'n' from a normal distribution $N\sim(mu,var)$ and 'g' from a gamma $\gamma \sim (s,b)$.  For a gamma distribution, you can specify the probability p that a derived allele decreases the phenotype with:
+
+**PSIGNQTN**
+
+p
+
+The default value is 50%. By default, effects are sampled independently of frequency, i.e., half effects are + and the rest are -, but it is possible to generate a correlation (rho) using the next parameter:
+
+**RHOQA**
+
+rho
+
+This option can be useful to simulate past selection.
+
+The narrow sense heritability is specified as:
+
+**H2**
+
+h2
+
+or alternatively, the broad sense heritability (using **H2G**). Only the genotypes from the base population (in the ```vcf``` file) are used to adjust heritability.
+
+### Phenotyping simulations
+
+As **pSBVB** takes ploidy into account to generate the phenotypes and incorporates several options to generate the molecular relationship matrix that are pertinent to polyploids. In a diploid organism, the phenotype for $i$-th individual can be simulated from:
+
+$y_{i}=\mu + \sum_{j=1}^{Q} \gamma_{ij}\alpha_j + \sum_{j=1}^{Q} \delta_{ij}d_j + \epsilon_i$
+
+Where $\mu$ is the mean general, $\alpha$ is the additive effect of $j$-th locus, that is, half the expected difference between homozygous genotypes, $\gamma_{ij}$ takes values -1, 0 and 1 for homozygous, heterozygous and alternative homozygous genotypes, respectively. $d_j$ is the dominance effect of $j$-th locus, and $\delta_{ij}$ takes value 1 if the genotype is heterozygous, 0 otherwise, and  $\epsilon_i$ is a normal residual. For polyploids, the phenotype of individual $i$ ($y_i$) (equivalent equation) is simulated from:
+
+$y_{i}=\mu + \sum_{j=1}^{Q} \eta_{ij}\alpha_j + \sum_{j=1}^{Q} \phi_{ij}d_j + \epsilon_{i}$
+
+where $\eta_{ij}$ is the number of copies of the alternative allele (coded say as 1) minus half the ploidy ($h/2$) for $j$-th locus and $i$-th individual, and $\alpha_j$ is therefore the expected change in phenotype per copy of allele ‘1’ in the $j$-th locus. In polyploids, as many dominance coefficients as ploidy level ($h$) minus two can technically be defined.  However, this results in an over-parameterized model that is of no practical use. Here instead we define the  $\phi_{ij}$ parameter as the minimum number of copies of allele 1 such that the expected phenotype is $d$. By default, **pSBVB** uses $\phi_{ij}=1$ , that is, any genotype having at least one allele ‘1’ and ‘0’ has the expected phenotypic value $d$. You can coded $\phi_{ij}$ as any integer between 1 and $h-1$.
+Finally, the residual $\epsilon_i$ is sampled from a $N \sim (0,ve)$, where $ve$ is adjusted given either **H2** or **H2G** using the genotypes from the base popula2tion.
+For multiple traits, the fields **H2** or **H2G**, **RHOQA**, and **QTLDISTA** and **QTLDISTD** must be repeated, eg, for two traits:
+
+**H2**
+
+0.5
+
+0.23
+
+**RHOQA**
+
+0
+
+-0.4
+
+**QTNDISTA**
+
+u  -0.2 0.2
+
+g    1  0.5
+
+which means that the firts trait have a heredability of $0.5$, a **RHOQA** parameter of 0 and **QTNDISTA** have an uniform distribution $(0.2,0.2)$ and the second trait have a heredability of $0.23$, **RHOQA** parameter is $-0.4$ and **QTNDISTA** have a gamma distribution with parameters $(1,0.5)$
+
+### Pedigree file (PEDFILE)
+
+The format is
+id  id_father id_mother [sex]
+
 where all ids must be consecutive integers, $0$ if father or mother unknown, sex is optional ($1$ for males, $2$ for females) and only needed if _sex_ chr is specified. The number of individuals in the ```vcf``` file must be specified with section:
 
 **NBASE**
@@ -153,3 +358,4 @@ test2.outq
 M. Pérez-Enciso, N. Forneris, G. de los Campos, A. Legarra. An evaluation of sequence-based genomic prediction in pigs using an efficient new simulator. Submitted.
 
 ## Appendix
+
