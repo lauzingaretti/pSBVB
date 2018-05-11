@@ -6,7 +6,7 @@ A flexible, efficient gene dropping algorithm to simulate sequence based populat
  <p align="center">
   Miguel Pérez-Enciso
  <p align="center">
- :email: mailto: miguel.perez@uab.es
+ :email: <miguel.perez@uab.es>
 
 <p align="center">
 With collaborations from N. Forneris, G. de los Campos, A. Legarra and L Zingaretti
