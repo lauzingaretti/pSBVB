@@ -6,7 +6,7 @@ A flexible, efficient gene dropping algorithm to simulate sequence based populat
  <p align="center">
   Miguel Pérez-Enciso
  <p align="center">
- <miguel.perez@uab.es>
+ :email: <miguel.perez@uab.es>
 
 <p align="center">
 With collaborations from N. Forneris, G. de los Campos, A. Legarra and L Zingaretti
@@ -31,7 +31,7 @@ Polyploid sequence based virtual breeding (**pSBVB**) is a modification of **SBV
 ### Installation
 
 The source code, manual and examples can be obtained from
-<https://github.com/mperezenciso/sbvb0>
+<https://github.com/lzingaretti/pSBVB>
 
 To compile:
 
@@ -105,7 +105,7 @@ or
 | <span style="font-size: 6pt" >i_chrom </span> |  <span style="font-size: 6pt" >i_pos</span> | <span style="font-size: 6pt" > add_eff_Trait_1 </span>|  <span style="font-size: 6pt" > add_eff_Trait_2 </span>|  <span style="font-size: 6pt" >... </span>|  <span style="font-size: 6pt" > add_eff_Trait_n </span>|
 | :----------- | :------: | :--------: | :----------------: | :--: | ------------------|
 
-or to additive and dominant effects:
+or to additive and dominant effects: (:octocat:)
 
 
 | <span style="font-size: 6pt" >i_chrom </span> |  <span style="font-size: 6pt" >i_pos</span> | <span style="font-size: 6pt" > add_eff_Trait_1 </span>|  <span style="font-size: 6pt" > add_eff_Trait_2 </span>|  <span style="font-size: 6pt" >... </span>|  <span style="font-size: 6pt" > add_eff_Trait_n </span> | <span style="font-size: 6pt" > dom_eff_Trait_1 </span>|  <span style="font-size: 6pt" > dom_eff_Trait_2 </span>|  <span style="font-size: 6pt" >... </span>|  <span style="font-size: 6pt" > dom_eff_Trait_n </span>|
