@@ -1,22 +1,4 @@
 
----
-title: pSBVB Polyploid Sequence Based Virtual Breeding.
-author: M P Enciso
-markdown-pdf.scale: 0.5
-fontsize: 11pt
-geometry: margin=1in
-export_on_save:
-output:
-  pandoc: true
-  md_document:
-    variant: markdown_github
-  pdf_document:
-    pandoc_args: [
-      "--no-tex-ligatures"
-    ]
-  ebook: true
----
-
 <h3 style="text-align: center;" markdown="1">pSBVB: Polyploid Sequence Based Virtual Breeding.</h3>
 
  <p align="center">
@@ -123,8 +105,9 @@ or
 | :----------- | :------: | :--------: | :----------------: | :--: | ------------------|
 
 or to additive and dominant effects:
-| <span style="font-size: 6pt" >i_chrom </span> | <span style="font-size: 6pt" >i_pos </span> | <span style="font-size: 6pt" >add_eff_Trait_1 </span> | <span style="font-size: 6pt" >add_eff_Trait_2 </span> | <span style="font-size: 6pt" > </span>| <span style="font-size: 6pt" > add_eff_Trait_n </span> | <span style="font-size: 6pt" > dom_eff_Trait_1 </span> | <span style="font-size: 6pt" > dom_eff_Trait_2 </span> | ... | <span style="font-size: 6pt" > dom_eff_Trait_n </span> |
-| ----------- | ------ | -------- | :---------------- | -- | ------------------| -------------------| ------------------ | --- | -------------------|
+
+| <span style="font-size: 6pt" >i_chrom </span> | <span style="font-size: 6pt" >i_pos </span> | <span style="font-size: 6pt" >add_eff_Trait_1 </span> | <span style="font-size: 6pt" >add_eff_Trait_2 </span> | <span style="font-size: 6pt" > </span> | <span style="font-size: 6pt" > add_eff_Trait_n </span> | <span style="font-size: 6pt" > dom_eff_Trait_1 </span> | <span style="font-size: 6pt" > dom_eff_Trait_2 </span> | ... | <span style="font-size: 6pt" > dom_eff_Trait_n </span> |
+| ----------- | ------ | -------- | :---------------- | -- | ------------------| -------------------| ------------------ | --- | -------------------|----|
 
 <span style="color:green; font-family:Georgia; font-weight: bold; background-color: #FFEF12 ">NOTE:</span>  The bellow file, must separated by spaces, and where _ichr_ is chromosome and _ipos_ is position in base pair, _add_eff_ is additive effect, i.e the effect of homozygous alleles and _dom_eff_ is the heterozygous effect.
 
