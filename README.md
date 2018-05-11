@@ -146,7 +146,7 @@ For a complete help, check the manual file, and file [manual.sbvb]  ( https://gi
 **OUTMFILE:**   Marker genotypes, optionally in Plink format toy example
 
 ### Controling genetic architecture
-
+:octocat:
 This is accomplished with **QTNFILE**. If **QTN** effects are not specified in **QTNFILE**, they can be simulated from uniform, normal or gamma distributions, specified in sections **QTNDISTA** and **QTNDISTD**. Narrow or broad sense heritabiilities are controlled with **H2** or **H2G** respectively. The software obtains actual genetic variances from individuals in base population and adjusts var e accordingly. See more in Manual File.
 
 ### Controlling output
@@ -167,7 +167,7 @@ This folder contains simplest example to check **pSBVB** format files from a tet
 
 ## Example
 
-Contains an example consisting of 150 **SNPs** from the 47 lines from a panel  of commercial octoploid strawberry.
+Contains an example consisting of 150 **SNPs** from the 47 lines from a toy  panel of  octoploid strawberry.
 
 
 ## Authors
