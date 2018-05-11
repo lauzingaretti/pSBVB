@@ -1,20 +1,3 @@
----
-title: pSBVB Polyploid Sequence Based Virtual Breeding.
-author: M P Enciso
-markdown-pdf.scale: 0.5
-fontsize: 11pt
-geometry: margin=1in
-export_on_save:
-output:
-  pandoc: true
-  md_document:
-    variant: markdown_github
-  pdf_document:
-    pandoc_args: [
-      "--no-tex-ligatures"
-    ]
-  ebook: true
----
 
 <h3 style="text-align: center;" markdown="1">pSBVB: Polyploid Sequence Based Virtual Breeding.</h3>
 
@@ -23,7 +6,7 @@ A flexible, efficient gene dropping algorithm to simulate sequence based populat
  <p align="center">
   Miguel Pérez-Enciso
  <p align="center">
- <miguel.perez@uab.es>
+ :email: <miguel.perez@uab.es>
 
 <p align="center">
 With collaborations from N. Forneris, G. de los Campos, A. Legarra and L Zingaretti
