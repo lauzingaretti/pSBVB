@@ -106,10 +106,11 @@ or
 
 or to additive and dominant effects:
 
-| <span style="font-size: 6pt" >i_chrom </span> | <span style="font-size: 6pt" >i_pos </span> | <span style="font-size: 6pt" >add_eff_Trait_1 </span> | <span style="font-size: 6pt" >add_eff_Trait_2 </span> | <span style="font-size: 6pt" > </span> | <span style="font-size: 6pt" > add_eff_Trait_n </span> | <span style="font-size: 6pt" > dom_eff_Trait_1 </span> | <span style="font-size: 6pt" > dom_eff_Trait_2 </span> | ... | <span style="font-size: 6pt" > dom_eff_Trait_n </span> |
-| :----------- | ------ | :-------- | :---------------- | -- | ------------------| -------------------| ------------------ | --- | -------------------| ---- |
 
-<span style="color:green; font-family:Georgia; font-weight: bold; background-color: #FFEF12 ">NOTE:</span>  The bellow file, must separated by spaces, and where _ichr_ is chromosome and _ipos_ is position in base pair, _add_eff_ is additive effect, i.e the effect of homozygous alleles and _dom_eff_ is the heterozygous effect.
+| <span style="font-size: 6pt" >i_chrom </span> |  <span style="font-size: 6pt" >i_pos</span> | <span style="font-size: 6pt" > add_eff_Trait_1 </span>|  <span style="font-size: 6pt" > add_eff_Trait_2 </span>|  <span style="font-size: 6pt" >... </span>|  <span style="font-size: 6pt" > add_eff_Trait_n </span> | <span style="font-size: 6pt" > dom_eff_Trait_1 </span>|  <span style="font-size: 6pt" > dom_eff_Trait_2 </span>|  <span style="font-size: 6pt" >... </span>|  <span style="font-size: 6pt" > dom_eff_Trait_n </span>|
+| :-----: | :-----: | :-----:| :-----:|  :-----:| :-----: | :-----:| :-----:| :-----:|  :-----:|
+
+The bellow file, must separated by spaces, and where _ichr_ is chromosome and _ipos_ is position in base pair, _add_eff_ is additive effect, i.e the effect of homozygous alleles and _dom_eff_ is the heterozygous effect.
 
 <span style="color:red; font-family:Georgia; font-weight: bold; background-color: #FFFF00 ">WARNING:</span>  **QTN** position must coincide with one **SNP** position in the ```vcf``` file, otherwise it is not considered.
 
