@@ -348,10 +348,15 @@ M. Pérez-Enciso, N. Forneris, G. de los Campos, A. Legarra. An evaluation of se
 
 ```NTRAIT```     
 ntrait
+
+```PLOIDY```
+p
+
 ``` MAXNCHR```      !—> max no. of chromosomes [23]
 maxnchr
-``` SEXCHR```       !--> chr id (number) of sex chromosome, 
-            !    males(sex=1) are assumed to be the heterogametic sex, chr Y is not considered
+
+``` SEXCHR```       !--> chr id (number) of sex chromosome,  !    males(sex=1) are assumed to be the heterogametic sex, chr Y is not considered
+
 sexchr
 
 ``` QTLFILE```      !--> file with qtl posns (chr& bp) add &dom effects can be defined in cols 3 & 4
@@ -362,49 +367,74 @@ epifile
 
 ``` PEDFILE``` 
 pedfile
-SNPFILE    !--> file with genotyped snps: chr, bp, can be repeated
+
+``` SNPFILE```     !--> file with genotyped snps: chr, bp, can be repeated
 snpfile
-MAPFILE    !-->recomb map file: chr, basepos, cm2Mb [cm2Mb_sex2]
+
+``` MAPFILE```     !-->recomb map file: chr, basepos, cm2Mb [cm2Mb_sex2]
 mapfile
-HAPFILE    !--> hap structure so program can be restarted with RESTART
+
+``` HAPFILE```     !--> hap structure so program can be restarted with RESTART
 hapfile
-OUTPLINK   !--> prints mkr in plink tpedformat
-OUTGFILE   !--> GRM outfile
+
+``` OUTPLINK```    !--> prints mkr in plink tpedformat
+
+``` OUTGFILE```    !--> GRM outfile
 outgfile
-OUTQFILE   !--> output qtl file
+
+``` OUTQFILE ```   !--> output qtl file
 out_q_file
-OUTYFILE   !--> y outfile
+
+``` OUTYFILE```    !--> y outfile
 outyfile
-OUTMFILE   !--> output file with mkr data
+
+``` OUTMFILE```    !--> output file with mkr data
+
 outmfile
-GZIP       !--> compress output files
 
-NBASE      !-->nind which genotypes are read from STDIN 
+``` GZIP```        !--> compress output files
+
+``` NBASE```       !-->nind which genotypes are read from STDIN 
+
 nbase
-H2         !--> heritability
+
+``` H2```          !--> heritability
 h2         !    repeated if multiple traits
-H2G        !--> broad heritability
+
+```H2G```        !--> broad heritability
 h2g        !    repeated if multiple traits
-RHOQA      !--> desired correlation between allele effect and frequency
+
+```RHOQA```      !--> desired correlation between allele effect and frequency
 rhoqa      !    repeated if multiple traits
-SIGNQTN    !--> P of derived allele being deleterious (only with gamma) [0.5]
+
+```SIGNQTN```    !--> P of derived allele being deleterious (only with gamma) [0.5]
 p_sign_qtl
-QTLDISTA   !--> QTL add effects are sampled from a distribution: u(niform), g(amma), n(ormal)
-[u, l_bound, u_bound] | [n, mu, var] | [g, s, b]              !    repeated if multiple traits
-QTLDISTD   !--> QTL dom effects are sampled from a distribution
+
+```QTLDISTA```   !--> QTL add effects are sampled from a distribution: u(niform), g(amma), n(ormal)
 [u, l_bound, u_bound] | [n, mu, var] | [g, s, b]              !    repeated if multiple traits
 
-CM2MB      !--> cM to Mb rate, default cm2mb [1.0]
+```QTLDISTD```   !--> QTL dom effects are sampled from a distribution
+[u, l_bound, u_bound] | [n, mu, var] | [g, s, b]              !    repeated if multiple traits
+
+```CM2MB```      !--> cM to Mb rate, default cm2mb [1.0]
 cm2mb
-MXOVER     !--> Max no xovers, default 3
+
+
+```MXOVER```     !--> Max no xovers, default 3
 mxover
 
-RESTART     !--> prepares files for new run of sbvb
-RESTARTQTL  !--> restart qtl effects but keeps haplotype structure
-NOPRINTHAP  !--> does not print hap file, eg, if no new haplotypes have been generated
-NOSEQUENCE  !--> does not use sequence for GRM, 
-EXPAND_BASEPOP  !--> breeds new base individuals involving random mating for ntgen generations 
+```RESTART```     !--> prepares files for new run of sbvb
+
+```RESTARTQTL```  !--> restart qtl effects but keeps haplotype structure
+
+
+```NOPRINTHAP```  !--> does not print hap file, eg, if no new haplotypes have been generated
+
+```NOSEQUENCE```  !--> does not use sequence for GRM, 
+
+```EXPAND_BASEPOP```  !--> breeds new base individuals involving random mating for ntgen generations 
  !    from nfam families
+ 
 ntgen  nfam
 
-mimicdiploid
+```mimicdiploid```
