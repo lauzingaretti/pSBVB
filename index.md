@@ -31,6 +31,7 @@ Polyploid sequence based virtual breeding (**pSBVB**) is a modification of **SBV
 
 ### Installation
 
+:computer:
 The source code, manual and examples can be obtained from
 <https://github.com/lzingaretti/pSBVB>
 
