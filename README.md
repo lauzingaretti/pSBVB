@@ -12,40 +12,10 @@ A flexible, efficient gene dropping algorithm to simulate sequence based populat
 With collaborations from N. Forneris, G. de los Campos, A. Legarra and L Zingaretti
 
 :memo:
-### Purpose
-Polyploid sequence based virtual breeding (**pSBVB**) is a modification of **SBVB** software (Pérez-Enciso et al. 2017) that allows simulating traits of an arbitrary genetic complexity in polyploids. Its goal is to simulate complex traits and genotype data starting with a ```vcf``` file that contains the genotypes of founder individuals and following a given pedigree. The main output are the genotypes of all individuals in the pedigree and/or molecular relationship matrices (GRM) using all sequence or a series of SNP lists, together with phenotype data. The program implements very efficient algorithms where only the recombination breakpoints for each individual are stored, therefore allowing the simulation of thousands of individuals very quickly. Most of computing time is actually spent in reading the ```vcf``` file. Future developments will optimize this step by reading and writing binary mapped files. The ```vcf``` file may not contain missing genotypes and is assumed to be phased.
-
-### Main features
-
-*Any number of traits.
-*Tool adapted to work with both, auto and allo-polyploid organisms.
-*Any number of QTNs, trait specific.
-*Any number of additive and dominant effects.
-*Can generate a correlation matrix to modelate meiosis in polyploid especies.
-*Can generate correlated allelic effects and frequencies.
-*Efficient algorithms to generate haplotypes and sample SNP genotypes.
-*Computes genomic relationship matrices for any number of SNP arrays simultaneously.
-*It allow to compute Genomic relationship matrix in several ways.
-*Any number of chromosomes, allows for sex chromosomes and varying local recombination rates, that can be sex specific.
-
-
-### Installation
-:computer:
-The source code, manual and examples can be obtained from
-<https://github.com/lauzingaretti/pSBVB>
-
-To compile:
-
-```gfortran -O3 kind.f90 ALliball.f90 aux_sub11.f90 psbvb.f90 -o sbvb -lblas ```
-pSBVB: Polyploid Sequence Based Virtual Breeding
-
-One Paragraph of project description goes here# **pSBVB**: Polyploid Sequence Based Virtual Breeding
-
-One Paragraph of project description goes here
 
 ## Getting Started
 
-Polyploid sequence based virtual breeding (**pSBVB**) is a modification of **SBVB** software (Pérez-Enciso et al. 2017) that allows simulating traits of an arbitrary genetic complexity in polyploids. Its goal is to simulate complex traits and genotype data starting with a ```vcf``` file that contains the genotypes of founder individuals and following a given pedigree. The main output are the genotypes of all individuals in the pedigree and/or molecular relationship matrices (GRM) using all sequence or a series of SNP lists, together with phenotype data. The program implements very efficient algorithms where only the recombination breakpoints for each individual are stored, therefore allowing the simulation of thousands of individuals very quickly. Most of computing time is actually spent in reading the ```vcf``` file. Future developments will optimize this step by reading and writing binary mapped files. The ```vcf``` file may not contain missing genotypes and is assumed to be phased.
+Polyploid sequence based virtual breeding (**pSBVB**) is a modification of **SBVB** software (Pérez-Enciso et al. 2017) that allows simulating traits of an arbitrary genetic complexity in polyploids. Its goal is to simulate complex traits and genotype data starting with a ```vcf``` file that contains the genotypes of founder individuals and following a given pedigree. The main output are the genotypes of all individuals in the pedigree and/or molecular relationship matrices (GRM) using all sequence or a series of SNP lists, together with phenotype data. The program implements very efficient algorithms where only the recombination breakpoints for each individual are stored, therefore allowing the simulation of thousands of individuals very quickly. Most of computing time is actually spent in reading the ```vcf``` file. Future developments will optimize this step by reading and writing binary mapped files. The ```vcf``` file may not contain missing genotypes and is assumed to be phased. Manual: https://github.com/lauzingaretti/pSBVB/blob/master/Manual.pdf
 
 ### Main Features
 
