@@ -1,5 +1,5 @@
 
-<h3 align="center"; style="text-align: center;" markdown="1">pSBVB: Polyploid Sequence Based Virtual Breeding.</h3>
+<p align="center"> pSBVB: Polyploid Sequence Based Virtual Breeding.</h3>
 
  <p align="center">
 A flexible, efficient gene dropping algorithm to simulate sequence based population data and complex traits.
