@@ -20,16 +20,16 @@ Full html: https://lauzingaretti.github.io/pSBVB/
 
 ### Main features
 
-*Any number of traits.
-*Tool adapted to work with both, auto and allo-polyploid organisms.
-*Any number of QTNs, trait specific.
-*Any number of additive and dominant effects.
-*Can generate a correlation matrix to modelate meiosis in polyploid especies.
-*Can generate correlated allelic effects and frequencies.
-*Efficient algorithms to generate haplotypes and sample SNP genotypes.
-*Computes genomic relationship matrices for any number of SNP arrays simultaneously.
-*It allow to compute Genomic relationship matrix in several ways.
-*Any number of chromosomes, allows for sex chromosomes and varying local recombination rates, that can be sex specific.
+* Any number of traits.
+* Tool adapted to work with both, auto and allo-polyploid organisms.
+* Any number of QTNs, trait specific.
+* Any number of additive and dominant effects.
+* Can generate a correlation matrix to modelate meiosis in polyploid especies.
+* Can generate correlated allelic effects and frequencies.
+* Efficient algorithms to generate haplotypes and sample SNP genotypes.
+* Computes genomic relationship matrices for any number of SNP arrays simultaneously.
+* It allow to compute Genomic relationship matrix in several ways.
+* Any number of chromosomes, allows for sex chromosomes and varying local recombination rates, that can be sex specific.
 
 ### Installation
 
