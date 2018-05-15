@@ -9,7 +9,7 @@ A flexible, efficient gene dropping algorithm to simulate sequence based populat
  :email: miguel.perez@uab.es
 
 <p align="center">
-With collaborations from N. Forneris, G. de los Campos, A. Legarra and L Zingaretti
+With collaborations from L Zingaretti, N. Forneris, G. de los Campos and A. Legarra 
 
 :memo:
 
