@@ -60,7 +60,7 @@ To install in  /usr/local/bin
 
 To run (assuming```.vcf```  file is compressed):
 
-```zcat file.vcf.gz | perl vcf2tped2.pl -hap | cut -d ' ' -f 1,4- | psbvb -isbvb.par```
+```zcat file.vcf.gz | perl vcf2tped2.pl -hap | cut -d ' ' -f 1,4- | psbvb -i sbvb.par```
 
 Where ```sbvb.par``` is the parameter file (details follow). The intermediate steps are simply for **pSBVB** to read genotypes in suitable format, that is,
 
