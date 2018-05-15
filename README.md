@@ -70,7 +70,7 @@ Where ```sbvb.par``` is the parameter file (details follow). The intermediate st
 
 with alleles coded as _0/1_. To run the program with the same random seed:
 
-```… | psbvb –isbvb.par –seed iseed ```
+```… | psbvb –i sbvb.par –seed iseed ```
 
 where iseed is an integer number.
 
