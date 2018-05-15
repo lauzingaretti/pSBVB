@@ -1,6 +1,6 @@
 ###run polyploid toy example and sorting files in a new folder.    
  #cat  toy.gen | path-to sbvb -i toy.par
-  cat toy_st.gen | /home/useradmin/Desktop/Ordenar_Trabajo/diallelic/sbvb -i file.par
+  cat toy_st.gen | sbvb -i file.par
            mkdir -p results
            cp Y.grm.1  results
            cp Y.outy   results
