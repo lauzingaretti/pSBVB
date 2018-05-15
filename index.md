@@ -81,7 +81,9 @@ tells the program that **QTN** specifications are in sbvb.qtl file. Comments can
 
 **PLOIDY**
 
-hCompared to SBVB (designed for diploid organisms), **pSBVB** allows simulating meiosis in autopolyploid or allopolyploid species. For that, **pSBVB** requires a matrix of dimension $h\times h$, must be consecutive integers $h$ is the ploidy level  specifying the pairing factors described above. To specify this matrix you must insert in file parameter:
+h
+
+Compared to SBVB (designed for diploid organisms), **pSBVB** allows simulating meiosis in autopolyploid or allopolyploid species. For that, **pSBVB** requires a matrix of dimension $h\times h$, must be consecutive integers $h$ is the ploidy level  specifying the pairing factors described above. To specify this matrix you must insert in file parameter:
 
 
 tells the program that the organisms used have ploidy $h$.
@@ -90,7 +92,7 @@ Compared to SBVB (designed for diploid organisms), **pSBVB** allows simulating m
 
 **RHOMATRIX**
 
-Verrrrrrr como se ponía esta matriz de recombinación
+Defining recombination rate. 
 
 ### Specifying genetic architecture
 If more than one trait is generated, then use
