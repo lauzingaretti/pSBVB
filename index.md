@@ -79,20 +79,6 @@ sbvb.qtl
 
 tells the program that **QTN** specifications are in sbvb.qtl file. Comments can be mixed starting with # or ! A full list of options in the parameter file is in Appendix 1. In the following, we list the main ones.
 
-**PLOIDY**
-
-h
-
-Compared to SBVB (designed for diploid organisms), **pSBVB** allows simulating meiosis in autopolyploid or allopolyploid species. For that, **pSBVB** requires a matrix of dimension $h\times h$, must be consecutive integers $h$ is the ploidy level  specifying the pairing factors described above. To specify this matrix you must insert in file parameter:
-
-
-tells the program that the organisms used have ploidy $h$.
-
-Compared to SBVB (designed for diploid organisms), **pSBVB** allows simulating meiosis in autopolyploid or allopolyploid species. For that, **pSBVB** requires a matrix of dimension $h\times h$, must be consecutive integers $h$ is the ploidy level  specifying the pairing factors described above. To specify this matrix you must insert in file parameter:
-
-**RHOMATRIX**
-
-Defining recombination rate. 
 
 ### Specifying genetic architecture
 If more than one trait is generated, then use
@@ -189,6 +175,26 @@ u  -0.2 0.2
 g    1  0.5
 
 which means that the firts trait have a heredability of $0.5$, a **RHOQA** parameter of 0 and **QTNDISTA** have an uniform distribution $(0.2,0.2)$ and the second trait have a heredability of $0.23$, **RHOQA** parameter is $-0.4$ and **QTNDISTA** have a gamma distribution with parameters $(1,0.5)$
+
+### Recombination in polyploids
+
+The ploidy level must be specified with section
+
+PLOIDY
+
+h
+
+in the parameter file. By default, pSBVB assumes autopolyploidy and permits recombination between each homeolog chromosome pair with equal probability. Strict alloploidy is specified with 
+
+ALLOPLOIDY
+
+Intermediate rates of recombination between homeolog pairs can be specified with
+
+RHOPLOIDY
+
+rho_elements
+
+where rho_elements is a vector of hxh elements specifying the probability of recombination between i and j homeologs. The diagonal (P of recombining with itself) is set to 0 by the program. 
 
 ### Pedigree file (PEDFILE)
 
