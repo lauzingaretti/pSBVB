@@ -152,6 +152,8 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Citation
 
+L. Zingaretti, A. Monfort, M. Pérez-Enciso. 2018. Modeling and simulation tools for genomic selection in polyploid species: a case study in octoploid strawberry. Submitted.
+
 M. Perez-Enciso, N. Forneris, G. de los Campos, A. Legarra. An efficient new simulator predicts minimal advantage of full sequence for genomic prediction. Submitted.
 
 
