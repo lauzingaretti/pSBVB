@@ -6,15 +6,10 @@
 #' @param data pedigree data with 3 column.Unknown are equal to zero. The first column is the individual index, the second the father and the last, the mather 
 #' @param dominance if true, returns the dominance relationship matrix
 #' @param path path to save the file. Default is NULL
-#' #####param slater if true, returns the additive autotetraploid relationship matrix as Slater (2013)
 #' 
 #' @return Matrix with the Relationship between the individuals.
-#' @author M L Zingaretti 
 #'
-#' @references \emph{Chapter 2: Genetic Covariance Between Relatives and Chapter 9: Non-additive Animal Models in Mrode, R. A., and Thompson, R. Linear models for the prediction of animal breeding values. Cabi, 2005.}
-#' @references \emph{Slater, A. T., Wilson, G. M., Cogan, N. O., Forster, J. W., & Hayes, B. J. (2013). Improving the analysis of low heritability complex traits for enhanced genetic gain in potato. Theoretical and Applied Genetics, 1-12.}
-#' @references \emph{Kerr, Richard J., et al. "Use of the numerator relationship matrix in genetic analysis of autopolyploid species." Theoretical and Applied Genetics 124.7 (2012): 1271-1282.}
-#' 
+#'
 
 
 RelMatrix <- function(data = NULL, dominance=FALSE,path=NULL){
