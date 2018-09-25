@@ -108,6 +108,6 @@ write.table(pedigree,"File_st.ped",sep="\t",col.names = FALSE, row.names=FALSE,
   return(A)          
 
 }
-
-pedgenerator(100,4,c(rep(100,3),150),sex=FALSE,path="~/Dropbox/DoctoradoCRAG/paper-1/article/software-help/reversinn1/pSBVB/toy_strawberry/Additional_functions"
-,exclude=47)
+#
+# pedgenerator(100,4,c(rep(100,3),150),sex=FALSE,path="~/Dropbox/DoctoradoCRAG/paper-1/article/software-help/reversinn1/pSBVB/toy_strawberry/Additional_functions"
+# ,exclude=47)
