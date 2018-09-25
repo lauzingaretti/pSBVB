@@ -87,7 +87,7 @@ RelMatrix <- function(data = NULL, dominance=FALSE,path=NULL){
   return(A)   
 }
 
-data<-read.table("~/Dropbox/DoctoradoCRAG/paper-1/article/software-help/reversinn1/pSBVB/toy_strawberry/Additional_functions/File_st.ped",header=FALSE)
-#check the dimensions of dataset 
-dim(data)
-RelMatrix(data,dominance=FALSE,path= "~/Dropbox/DoctoradoCRAG/paper-1/article/software-help/reversinn1/pSBVB/toy_strawberry/Additional_functions/")
+# data<-read.table("~/Dropbox/DoctoradoCRAG/paper-1/article/software-help/reversinn1/pSBVB/toy_strawberry/Additional_functions/File_st.ped",header=FALSE)
+# check the dimensions of dataset 
+# dim(data)
+# RelMatrix(data,dominance=FALSE,path= "~/Dropbox/DoctoradoCRAG/paper-1/article/software-help/reversinn1/pSBVB/toy_strawberry/Additional_functions/")
