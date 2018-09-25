@@ -1,0 +1,6 @@
+file_1.par --> heredability of 0.3, 0.4 and 0.5  generate simultaneosly 3 traits. Use G* as genomic relationship matrix. Three additive effects. See par file.   
+file_2.par -->heredability of 0.4, generate simultaneosly 1 traits. Use G* as genomic relationship matrix 
+file_3.par -->heredability of 0.5, generate simultaneosly 1 traits. Use G* as genomic relationship matrix 
+file_4.par --> heredability of 0.5, generate simultaneosly 1 traits. Use GT as genomic relationship matrix 
+file_5.par --> heredability of 0.3, generate simultaneosly 1 traits. Use GT as genomic relationship matrix, 80 QTNS
+file_6.par --> heredability of 0.3, generate simultaneosly 1 traits. Use GT as genomic relationship matrix  150 QTNS diploid chip 
