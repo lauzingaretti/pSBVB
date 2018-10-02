@@ -47,7 +47,7 @@ The source code, manual and examples can be obtained from:
 <https://github.com/mperezenciso/pSBVB>
 <https://github.com/lauzingaretti/pSBVB>
 To compile:
-```gfortran -O3 kind.f90 ALliball.f90 aux_sub11.f90 psbvb.f90 -o sbvb -lblas ```
+```gfortran -O3 kind.f90 ALliball.f90 aux_sub11.f90 pSBVB.f90 -o sbvb -lblas ```
 or
 ```make ```
 
