@@ -84,7 +84,6 @@ M<-pedgenerator(100,4,c(rep(100,3),150),
    sex=FALSE,
    path="~/Dropbox/DoctoradoCRAG/paper-1/article/software-help/reversinn1/pSBVB/
    toy_strawberry/Additional_functions",exclude=47)
-tail(M$pedigree)
 ```
 
 ### Example 2: Generate a pedigree file with sex option
@@ -96,8 +95,6 @@ source("pedigree.R")
 M<-pedgenerator(100,4,c(rep(100,3),150),sex=FALSE,
    path="~/Dropbox/DoctoradoCRAG/paper-1/article/software-help/reversinn1/pSBVB/toy_strawberry/
    Additional_functions",exclude=47)
-
-tail(M$pedigree)
 ```
 
 Generate a pedigree based relationship matrix
@@ -110,9 +107,8 @@ source("RelationshipMatrix.R")
 data<-read.table("~/Dropbox/DoctoradoCRAG/paper-1/article/software-help/reversinn1/pSBVB
                  /toy_strawberry/Additional_functions/File_st.ped",header=FALSE)
 #check the dimensions of dataset 
-dim(data)
+
 A<-RelMatrix(data,dominance=FALSE,path= "~/Dropbox/DoctoradoCRAG/paper-1/article/software-help/reversinn1/pSBVB/toy_strawberry/Additional_functions/")
-tail(A)
 ```
 
 Application examples
@@ -155,75 +151,52 @@ The R script to perform Predictive abilities is GBlupFunction.R
 Running Model 1
 ---------------
 
-Here, we include the output from three models simultaneosly and we compared them with Pedigree Based models. Finally, we plot the estimated vs. true values. We only graph the thirth model (heredability parameter was 0.5).
+Here, we include the output from three models simultaneosly and we compared them with Pedigree Based models. Finally, we plot the estimated vs. true values. We only graph the thirth model (heritability parameters to each model were set on 0.3, 0.4 and 0.5).
+
+In this example, we have simulated three phenotypes simultaneosly. The GBlup Prediction, could be used to evaluated predictive of those traits ability simultaneosly.
 
 ``` r
 library(ggplot2)
-source("GBlupFunction.R")
-setwd("/home/laura/Dropbox/DoctoradoCRAG/paper-1/article/software-help/reversinn1/pSBVB/toy_strawberry/results_example1/")
+#choose the dataset directory  using setwd() /results_example1 
+# Read y and G using 
+#G<- read.table("Y.grm.1")
+#y<- read.table("Y.outy")
 
-G<- read.table("Y.grm.1")
-y<- read.table("Y.outy")
-#check matrix dimention
-dim(y)
-```
-
-    ## [1] 503  13
-
-``` r
-dim(G)
-```
-
-    ## [1] 503 503
-
-``` r
-#In the example one, we had been simulated three phenotypes simultaneosly. The GBlup Prediction, could be used to evaluated predictive of those traits ability simultaneosly. 
 h2=c(0.3,0.4,0.5)
 ntraits=3
 make_predictions=c(353:503)
-library(ggplot2)
+
 S<-GBlup_predict(G=G,y=y,h2=h2,make_predictions=make_predictions,ntraits=ntraits)
+
+#Predictive ability computed with GModel 
 S[[3]]$rho
 ```
 
-    ## [1] 0.5417917
+    ## [1] 0.6135635
 
 ``` r
 Phenohat<-S[[3]]$uhat[make_predictions] + S[[3]]$mean
 Pheno<-S[[3]]$yout_corr[make_predictions]
-cor(Pheno,Phenohat)
-```
 
-    ## [1] 0.5417917
 
-``` r
 datos<-data.frame(Phenohat,Pheno)
 colnames(datos)<-c("Yhat","Y")
-apply(datos,2,class)
-```
 
-    ##      Yhat         Y 
-    ## "numeric" "numeric"
-
-``` r
 ggplot(datos, aes(y=Yhat, x=Y,colour="red")) +
 geom_point(size=0.6) + scale_shape_manual(values=c(2,4)) + 
 ggtitle("Estimated values for testing set - Genomic matrix") +
 geom_abline(intercept=lm(Yhat ~ Y,data=datos)$coefficients[1], slope=lm(Yhat ~ Y,data=datos)$coefficients[2])+
-#scale_x_continuous(limits = c(min(datos[,1]), max(datos[,1])))+
-#scale_y_continuous(limits = c(min(datos[,2]), max(datos[,2])))+
-
 theme(panel.background = element_blank(),
     panel.grid.major = element_blank(),
     panel.grid.minor = element_blank(), legend.position ="none")
 ```
 
-![](help_addfunctions_version2_files/figure-markdown_github/unnamed-chunk-11-1.png)
+![](help_addfunctions_version2_files/figure-markdown_github/unnamed-chunk-12-1.png)
 
 Running Model 2
 ===============
 
-Model 4 incorporates dominant effects
+This model includes dominant effects from an uniform distribution with parameters a=0.2, b=0.6
 
 ``` r
 source("GBlupFunction.R")
@@ -232,28 +205,9 @@ setwd("/home/laura/Dropbox/DoctoradoCRAG/paper-1/article/software-help/reversinn
 G<- read.table("Y.grm.1")
 y<- read.table("Y.outy")
 #check matrix dimention
-dim(y)
-```
-
-    ## [1] 503   5
-
-``` r
-dim(G)
-```
-
-    ## [1] 503 503
-
-``` r
 setwd("/home/laura/Dropbox/DoctoradoCRAG/paper-1/article/software-help/reversinn1/pSBVB/toy_strawberry/")
-
 R<-read.table("Relationship.mat")
 #check matrix dimention
-dim(R)
-```
-
-    ## [1] 550 550
-
-``` r
 R<-R[c(48:550),c(48:550)]
 #In the example one, we had been simulated three phenotypes simultaneosly. The GBlup Prediction, could be used to evaluated predictive of those traits ability simultaneosly. 
 h2=0.5
@@ -262,23 +216,29 @@ make_predictions=c(354:503)
 
 S<-GBlup_predict(G=G,y=y,h2=h2,make_predictions=c(354:503),ntraits=ntraits)
 SR<-GBlup_predict(G=R,y=y,h2=h2,make_predictions=c(354:503),ntraits=ntraits)
+##gENETIC MODEL PA
 S$rhoM
 ```
 
-    ## [1] 0.7171339
+    ## [1] 0.5317716
 
 ``` r
+#RELATIONSHIP MODEL PA
 SR$rhoM
 ```
 
-    ## [1] 0.5082351
+    ## [1] 0.2892304
 
-Running Model 3
-===============
+Example with MIMIC\_DIPLOID activate
+====================================
+
+This example includes an heritability parameter of 0.5, 150 QTN's effects from the 1500 available ones. The Genetic matrix was assesed asuming Diploid.
 
 ``` r
 source("GBlupFunction.R")
-setwd("/home/laura/Dropbox/DoctoradoCRAG/paper-1/article/software-help/reversinn1/pSBVB/toy_strawberry/results_example5/")
+setwd("/home/laura/Dropbox/DoctoradoCRAG/paper-1/article/software-help/reversinn1/pSBVB/toy_strawberry/results_example2/")
+
+####with mimic diploid option
 
 G<- read.table("Y.grm.1")
 y<- read.table("Y.outy")
@@ -306,23 +266,58 @@ dim(R)
 
 ``` r
 R<-R[c(48:550),c(48:550)]
-#In the example one, we had been simulated three phenotypes simultaneosly. The GBlup Prediction, could be used to evaluated predictive of those traits ability simultaneosly. 
-h2=0.3
+h2=0.5
 ntraits=1
 make_predictions=c(354:503)
 
-S<-GBlup_predict(G=G,y=y,h2=h2,make_predictions=c(354:503),ntraits=ntraits)
-SR<-GBlup_predict(G=R,y=y,h2=h2,make_predictions=c(354:503),ntraits=ntraits)
+S<-GBlup_predict(G=G,y=y,h2=h2,make_predictions=c(354:503),ntraits=1)
+SR<-GBlup_predict(G=R,y=y,h2=h2,make_predictions=c(354:503),ntraits=1)
+#correlation with Genetic Matrix
 S$rhoM
 ```
 
-    ## [1] 0.6088193
+    ## [1] 0.4317548
 
 ``` r
+#correlation with Numerator relationship matrix
 SR$rhoM
 ```
 
-    ## [1] 0.2337133
+    ## [1] 0.4509271
+
+Example with MIMIC\_HAPLOID
+===========================
+
+This example includes an heritability parameter of 0.5, 150 QTN's effects from the 1500 available ones. The Genetic matrix was assesed using MIMIC\_HAPLOID option.
+
+``` r
+source("GBlupFunction.R")
+setwd("/home/laura/Dropbox/DoctoradoCRAG/paper-1/article/software-help/reversinn1/pSBVB/toy_strawberry/results_example8/")
+####with mimic haploid option 
+G<- read.table("Y.grm.1")
+y<- read.table("Y.outy")
+setwd("/home/laura/Dropbox/DoctoradoCRAG/paper-1/article/software-help/reversinn1/pSBVB/toy_strawberry/")
+
+R<-read.table("Relationship.mat")
+#check matrix dimention
+R<-R[c(48:550),c(48:550)]
+h2=0.5
+make_predictions=c(354:503)
+
+S<-GBlup_predict(G=G,y=y,h2=h2,make_predictions=c(354:503),ntraits=1)
+SR<-GBlup_predict(G=R,y=y,h2=h2,make_predictions=c(354:503),ntraits=1)
+#Genomic PA
+S$rhoM
+```
+
+    ## [1] 0.3720766
+
+``` r
+#Numerator Relationship PA
+SR$rhoM
+```
+
+    ## [1] 0.5175522
 
 Examples with potato dataset:
 =============================
@@ -333,7 +328,7 @@ source("pedigree.R")
 source("RelationshipMatrix.R")
 ```
 
-    ## Completed! Time = 0.001283333  minutes
+    ## Completed! Time = 0.001233333  minutes
 
 ``` r
 source("GBlupFunction.R")
@@ -357,7 +352,7 @@ G<-G[,colnames(G)%in%map[,1]]
 dim(G)
 ```
 
-    ## [1] 150 414
+    ## [1] 150 395
 
 ``` r
 #generate genotypes vcf format 
@@ -383,7 +378,7 @@ dim(data)
 A<-RelMatrix(data,dominance=FALSE,path="/home/laura/Dropbox/DoctoradoCRAG/paper-1/article/software-help/reversinn1/pSBVB/toy_potato/")
 ```
 
-    ## Completed! Time = 0.002033333  minutes
+    ## Completed! Time = 0.002066667  minutes
 
 ``` r
 setwd("/home/laura/Dropbox/DoctoradoCRAG/paper-1/article/software-help/reversinn1/pSBVB/toy_potato/results_potato/")
@@ -402,7 +397,7 @@ S<-GBlup_predict(G=G,y=y,h2=h2,make_predictions=make_predictions,ntraits=ntraits
 S$rho
 ```
 
-    ## [1] 0.5902717
+    ## [1] 0.4860038
 
 ``` r
 Phenohat<-S$uhat[make_predictions] + S$mean
@@ -410,7 +405,7 @@ Pheno<-S$yout_corr[make_predictions]
 cor(Pheno,Phenohat)
 ```
 
-    ## [1] 0.5902717
+    ## [1] 0.4860038
 
 ``` r
 datos<-data.frame(Phenohat,Pheno)
@@ -434,7 +429,7 @@ ggplot(datos, aes(y=Yhat, x=Y,colour="red")) +
         panel.grid.minor = element_blank(), legend.position ="none")
 ```
 
-![](help_addfunctions_version2_files/figure-markdown_github/unnamed-chunk-16-1.png)
+![](help_addfunctions_version2_files/figure-markdown_github/unnamed-chunk-18-1.png)
 
 ``` r
 make_predictions=c(401:550)
@@ -444,7 +439,7 @@ SR<-GBlup_predict(G=RelMatrix,y=y,h2=h2,make_predictions=c(401:550),ntraits=ntra
 SR$rhoM
 ```
 
-    ## [1] 0.3015775
+    ## [1] 0.3866816
 
 ``` r
 Pheno<-SR$yout_corr[make_predictions]
@@ -461,5 +456,5 @@ ggplot(datos_r, aes(y=Yhat, x=Y,colour="red")) +
         panel.grid.minor = element_blank(), legend.position ="none")
 ```
 
-![](help_addfunctions_version2_files/figure-markdown_github/unnamed-chunk-16-2.png)
+![](help_addfunctions_version2_files/figure-markdown_github/unnamed-chunk-18-2.png)
 
