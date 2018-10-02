@@ -1,4 +1,7 @@
 !ULL correct print iom line 1833 aprox
+! 20181002 MIMIC_DIPLOID corrected
+! 20180207 MIMIC_HAPLOID strict dominance only
+! 20180111 error in l 2287 allocate ploidy
 ! 20171025 option MIMIC_DIPLOID to treat polyploids as diploid
 ! dogrm, var is n*p*(1-p)
 ! think of estimates when allele dosages are not known
@@ -169,7 +172,7 @@
  real(r8), pointer        :: rhoqa(:)=>null(), &  ! cor btw qtl eff and freq
                              tau(:,:)=>null()     ! for polyploids, controls P of pairing across homeol.
  logical                  :: init_add=.false., init_dom=.false., &
-                             overdominance=.false., mimic=.false.
+                             overdominance=.false., mimic_diploid=.false., mimic_hap=.false.
  logical, pointer         :: binary(:)=>null()
  type(t_fchr), pointer    :: fchr(:)=>null()
  type(t_epipair),pointer  :: epi(:)=>null()
@@ -292,7 +295,7 @@
  !--> aux variables
  integer   :: ioped=1, ioy=33, i, ii, ichip, ichr, ind, iorigin, j, h, n, nind, nbase, nchr,&
               isire, idam, seed, icol(10)
- character :: parfile*30='', cmd*100, xc(20)*30, path*30
+ character :: parfile*30='', cmd*500, xc(20)*30, path*30
  real      :: x(size(xc)), t1, t2
  logical   :: seed_defined=.false., ex
  integer, allocatable :: iped(:,:), idcode(:)
@@ -322,7 +325,7 @@
  if(.not.seed_defined) then
     call initia_random(printseed=.true.)
  else
-    call initia_random(seed); print*, 'seed:', seed
+    call initia_random(seed0=seed); print*, 'seed:', seed
  endif
  
  !--> read info
@@ -392,7 +395,7 @@
        !--> this means an expanded population
        if(isire==0 .or. idam==0) then
           if(info%expand_t==0 .and. .not.info%restartqtl) then
-              print*, 'Ind ',ind
+             print*, 'Ind ',ind
              STOP 'Both parents must be known in non base individuals or expand pedigree'
           elseif(.not.inds(ind)%hapknown) then
              call expand_ind(inds(ind), inds(1:nbase), info%expand_t, info%expand_nfam, gfeatures)
@@ -412,7 +415,7 @@
           if(.not.inds(ind)%hapknown .or. info%restartqtl) &
              call get_qtlori(inds(ind),gfeatures)
           do ichr=1, gfeatures%nchr; do h=1, gfeatures%ploidy
-           print*, 'ind',ind, ichr, h, inds(ind)%g%chr(ichr,h)%pos, inds(ind)%g%chr(ichr,h)%ori
+             print*, 'ind',ind, ichr, h, inds(ind)%g%chr(ichr,h)%pos, inds(ind)%g%chr(ichr,h)%ori
           enddo  ; enddo
        endif
     endif
@@ -521,7 +524,9 @@
       forall(i = 1:gf%ploidy) gf%tau(i,i)=0.
     case('MIMIC_DIPLOID')    !--> treats ployploid genotypes as diploids
       if(gf%ploidy == 2) STOP 'MIMIC_DIPLOID section must appear after PLOIDY'
-      gf%mimic=.true.
+      gf%mimic_diploid=.true.
+    case('MIMIC_HAPLOID')    !--> treats genotypes as haploid (complete dominance)
+      gf%mimic_hap=.true.
     case('RESTART')    !--> prepares files for new run of sbvb
       info%restart=.true.
       info%printhap=.true.
@@ -583,7 +588,7 @@
     case('OUTMFILE') !--> outfile with mkr data, either chip or sequence
       read(iopar,*) info%outmfile
       info%printmkr=.true.
-    case('GWASFILE') !--> outfile with mkr data, either chip or sequence
+    case('GWASFILE') !--> outfile with gwas data, either chip or sequence
       read(iopar,*) info%gwasfile
       info%gwas=.true.
     case ('NBASE')   !--> nind which genotypes are read from STDIN (nori=ploidy*nbase)
@@ -1125,12 +1130,12 @@
              !.--> this should work with any ploidy
              tbv(ind) = tbv(ind) + (g-gf%ploidy/2) * gf%fchr(ichr)%qtladd(iqtl,it)
              tbv(ind) = tbv(ind) + dodom(g, gf%fchr(ichr)%qtladd(iqtl,it), gf%fchr(ichr)%qtldom(iqtl,it) , gf%delta)
-             tba(ind) = tba(ind) + (g-gf%ploidy/2) * gf%fchr(ichr)%qtladd(iqtl,it)
+             !tba(ind) = tba(ind) + (g-gf%ploidy/2) * gf%fchr(ichr)%qtladd(iqtl,it)
           enddo
        enddo
      enddo
      
-    !--> add epi
+    !--> add epi, does not work with polyploids
     tbp=0
     do iepi=1, gf%nepi
        if(gf%epi(iepi)%trait==it) then
@@ -1859,7 +1864,7 @@
  write(*,'(a)') a
  print'(a,i6)', 'ind: ', ind%id
  do ichr=1, gf%nchr
-    !print'(a,i3)', ' chr: ', ichr
+    print'(a,i3)', ' chr: ', ichr
     do h=1, gf%ploidy
        ichunk=1
        do isnp=1, gf%fchr(ichr)%nsnp
@@ -1871,10 +1876,10 @@
           ori  = ind%g%chr(ichr,h)%ori(ichunk)
           write(*,'(i1)',advance='no') ff(ori)%g%chr(ichr,1)%gt(isnp)
        enddo
-       !write(*,*)
+       write(*,*)
     enddo
  enddo
- !write(*,'(a)') a
+ write(*,'(a)') a
 !--------------
  end subroutine
 !--------------
@@ -1907,7 +1912,8 @@
  character              :: mfile*30, gfile*30, wfile*30, a*1
 
  vploidy = gf%ploidy
- if(gf%mimic) vploidy=2
+ if(gf%mimic_diploid) vploidy=2
+ if(gf%mimic_hap) vploidy=1
  if(ichip>9) STOP 'max no of chips allowed is 9'
  write(a,'(i1)') ichip
  mfile=trim(adjustl(datos%outmfile)) // '.' // a
@@ -1984,8 +1990,10 @@
        enddo
 
        !--> computes freq according to whether mimic diploid is in action
-       if(gf%mimic .and. maxval(g(:,isnp)) > 2 ) then
-          where (g(:,isnp) > 0) g(:,isnp)=2
+       if(gf%mimic_diploid) then
+          where (g(:,isnp) > 2) g(:,isnp)=2
+       elseif(gf%mimic_hap) then
+          where (g(:,isnp) > 0) g(:,isnp)=1
        endif
        freq = sum(g(:,isnp)) / real(vploidy*nind)
 
@@ -2013,7 +2021,7 @@
        !--> ULL: modified for ploidy>2
        if(datos%printgrm) then
           grm_d = grm_d + vploidy * freq*(1.-freq)
-          g(:,isnp) = g(:,isnp) - sum(g(:,isnp)) / (vploidy*nind)
+          g(:,isnp) = g(:,isnp) - (sum(g(:,isnp)) / (vploidy*nind))
        endif
 
        if(mod(isnp,nsnp_block)==0 .or. icsnp==nsnp) then
@@ -2284,7 +2292,7 @@
     pop(ind)%g%nchr   = gf%nchr
     pop(ind)%hapknown = .true.
     !--> check if assigned and error or reallocate
-    allocate(pop(ind)%g%chr(gf%nchr,2))
+    allocate(pop(ind)%g%chr(gf%nchr,gf%ploidy))
     do ichr=1, gf%nchr
        do h=1, gf%ploidy   !--> ploidy
           read(ioh,*) nx
