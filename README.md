@@ -4,12 +4,10 @@
  <p align="center">
 A flexible, efficient gene dropping algorithm to simulate sequence based population data and complex traits.
  <p align="center">
-  Miguel Pérez-Enciso
+  Miguel Pérez-Enciso, Laura Zingaretti
  <p align="center">
- :email: miguel.perez@uab.es
+ :email: miguel.perez@uab.es or laura.zingaretti@cragenomica.es
 
-<p align="center">
-With collaborations from L Zingaretti, N. Forneris, G. de los Campos and A. Legarra 
 
 :memo:
 
@@ -58,9 +56,9 @@ To install in  /usr/local/bin
 
 ## Running the tests
 
-To run (assuming```.vcf```  file is compressed):
+To run (assuming```.gen```  file is compressed):
 
-```zcat file.vcf.gz | perl vcf2tped2.pl -hap | cut -d ' ' -f 1,4- | psbvb -i sbvb.par```
+```zcat file.gen  | psbvb -i sbvb.par```
 
 Where ```sbvb.par``` is the parameter file (details follow). The intermediate steps are simply for **pSBVB** to read genotypes in suitable format, that is,
 
