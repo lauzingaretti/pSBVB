@@ -7,22 +7,25 @@ cat toy_st.gen | ~/Dropbox/DoctoradoCRAG/paper-1/article/software-help/src/sbvb 
            cp Y.grm.1  results_example1
            cp Y.outy   results_example1
            cp Y.outq   results_example1
+           cp Y.outm*.1.gz   results_example1
            rm Y.grm.1 
            rm Y.outq
-           rm Y.outy
+           rm Y.outy           
+           rm Y.outm*.1.gz
+           
         
-        
-#h2= 0.4 y G mimic diploid
+#h2= 0.5 y G mimic diploid
  cat toy_st.gen |  ~/Dropbox/DoctoradoCRAG/paper-1/article/software-help/src/sbvb   -i file_2.par
            mkdir -p results_example2
            cp Y.grm.1  results_example2
            cp Y.outy   results_example2
            cp Y.outq   results_example2
+           cp Y.outm*.1.gz  results_example2
            rm Y.grm.1 
            rm Y.outq
-           rm Y.outy
-         
-         
+           rm Y.outy           
+           rm Y.outm*.1.gz
+           
          
 #h2= 0.5 y G mimic diploid
  cat toy_st.gen |  ~/Dropbox/DoctoradoCRAG/paper-1/article/software-help/src/sbvb  -i file_3.par
@@ -73,4 +76,14 @@ cat toy_st.gen | ~/Dropbox/DoctoradoCRAG/paper-1/article/software-help/src/sbvb 
            rm Y.outq
            rm Y.outy           
            
+ cat toy_st.gen |  ~/Dropbox/DoctoradoCRAG/paper-1/article/software-help/src/sbvb  -i file_8.par
+           mkdir -p results_example8
+           cp Y.grm.1  results_example8
+           cp Y.outy   results_example8
+           cp Y.outq   results_example8
+           cp Y.outm*.1.gz  results_example8
+           rm Y.grm.1 
+           rm Y.outq
+           rm Y.outy           
+           rm Y.outm*.1.gz
            
