@@ -1,7 +1,7 @@
 Purpose
 =======
 
-Polyploid sequence based virtual breeding (**pSBVB**) is a modification of SBVB software (Pérez-Enciso et al. 2016, <https://doi.org/10.1534/genetics.116.194878> ) that allows simulating traits of an arbitrary genetic complexity in polyploids. Its goal is to simulate complex traits and genotype data starting with a vcf file that contains the genotypes of founder individuals and following a given pedigree. The main output are the genotypes of all individuals in the pedigree and/or molecular relationship matrices (**GRM**) using all sequence or a series of SNP lists, together with phenotype data. The program implements very efficient algorithms where only the recombination breakpoints for each individual are stored, therefore allowing the simulation of thousands of individuals very quickly. Most of computing time is actually spent in reading the `vcf` file. Future developments will optimize this step by reading and writing binary mapped files. The `vcf` file may not contain missing genotypes and is assumed to be phased.
+Polyploid sequence based virtual breeding (**pSBVB**) is a modification of SBVB software (Pérez-Enciso et al. 2016, <https://doi.org/10.1534/genetics.116.194878> ) that allows simulating traits of an arbitrary genetic complexity in polyploids. Its goal is to simulate complex traits and genotype data starting with a `vcf` file that contains the genotypes of founder individuals and following a given pedigree. The main output are the genotypes of all individuals in the pedigree and/or molecular relationship matrices (**GRM**) using all sequence or a series of SNP lists, together with phenotype data. The program implements very efficient algorithms where only the recombination breakpoints for each individual are stored, therefore allowing the simulation of thousands of individuals very quickly. Most of computing time is actually spent in reading the `vcf` file. Future developments will optimize this step by reading and writing binary mapped files. The `vcf` file may not contain missing genotypes and is assumed to be phased.
 
 ![General Software' View](generalview.png)
 
@@ -46,7 +46,7 @@ The program requires blas libraries but these are standard in any unix or OS mac
 
 <span style="color:#cc66ff; font-family:Georgia; font-weight: bold ">USAGE:</span>
 
-To run: if you have a .vcf file
+To run: if you have a `.vcf` file
 
 ``` r2
  file.vcf | pSBVB -isbvb.par
@@ -69,13 +69,13 @@ where iseed is an integer number
 Parameter file
 ==============
 
-The parameter file controls all **pSBVB** behavior. It consists of a list of sections in UPPER CASE (in any order) followed in the following line by the required data, e.g.,
+The parameter file controls all **pSBVB** behavior. It consists of a list of sections in UPPER CASE (in any order) followed in the following line by the required data e.g.,
 
 **QTNFILE**
 
 sbvb.qtl
 
-tells the program that **QTN** specifications are in sbvb.qtl file. Comments can be mixed starting with \# or ! A full list of options in the parameter file is in Appendix 1.The main ones are:
+tells the program that **QTN** specifications are in sbvb.qtl file. Comments can be mixed starting with \# or ! A full list of options in the parameter file is in [Appendix](#/Apendix)).The main ones are:
 
 The number of traits to be generated is especified (by default is one):
 
@@ -113,15 +113,17 @@ If QTN effects are not provided, they can be simulated specifying
 
 **QTNDISTA**
 
-u lower\_bound upper\_bound n mu var g s b
+u a b n mu var g s b
 
 and
 
 **QTNDISTD**
 
-u lower\_bound upper\_bound n mu var g s b
+u a b n mu var g s b
 
-in parameter file. where 'u' means effects are sampled from a uniform distribution *U* ∼ (*l**o**w**e**r*<sub>*b**o**u**n**d*</sub>, *u**p**p**e**r*<sub>*b**o**u**n**d*</sub>), 'n' from a normal distribution *N* ∼ (*m**u*, *v**a**r*) and 'g' from a gamma *γ* ∼ (*s*, *b*). For a gamma distribution, you can specify the probability p that a derived allele decreases the phenotype with:
+in parameter file.
+
+where 'u a b' means effects are sampled from a uniform distribution *U* ∼ (*a*, *b*), 'n mu var' from a normal distribution *N* ∼ (*m**u*, *v**a**r*) and 'g s b' from a gamma *γ* ∼ (*s*, *b*). For a gamma distribution, you can specify the probability p that a derived allele decreases the phenotype with:
 
 **PSIGNQTN**
 
@@ -134,6 +136,14 @@ The default value is 50%. By default, effects are sampled independently of frequ
 rho
 
 where rho is the desired correlation between QTN additive effects and their frequencies. This option can be useful to simulate past selection (Pérez-Enciso et al., 2016), since selection induces a negative correlation between frequency and effect. By default, rho is 0.
+
+For instance, if you want to simulate the additive effects using a Uniform distribution (*U* ∼ (0.2, 0.6)), your parameter file should have a section as:
+
+``` r2
+QTNDISTA
+
+u 0.2 0.6
+```
 
 The broad sense heritability is specified as:
 
@@ -400,7 +410,7 @@ The R script to perform Predictive abilities is /Additional\_Functions/GBlupFunc
 Toy Potato dataset
 ==================
 
-We used a subset of 396 SNPs and 150 individuals from Enciso-Rodriguez et al. (2018) with genotypes coded between 0 and 4 (the potato ploidy level). We used these genotypes to generate a “vcf”- like file with random phases. SNP positions were obtained from Rosyara et al.
+We used a subset of 396 SNPs and 150 individuals from Enciso-Rodriguez et al. (2018) with genotypes coded between 0 and 4 (the potato ploidy level). We used these genotypes to generate a `vcf`- like file with random phases. SNP positions were obtained from Rosyara et al.
 
 ``` r
 source("/Additional_Functions/pedigree.R")
@@ -409,7 +419,7 @@ source("/Additional_Functions/GBlupFunction.R")
 source("/Additional_Functions/generate_vcf_from_gen.R")
 ```
 
-We created a function to transform genotypes into ‘vcf’ format. To do that, a dataset with genotypes (data varying between 0 and ploidy level) and a map file containing the SNP’s physical coordinates are needed. We used genotypes from potato database (<https://figshare.com/articles/Supplemental_Material_for_Enciso-Rodriguez_et_al_2018/6262214>). Note that our function randomly generates the phases in the vcf file. In order to generate linkage disequilibrium, we used pSBVB parameters EXPAND\_BASEPOP and INDFIRST, which simultaneously exclude the initial individuals and generate a new set of founders.
+We created a function to transform genotypes into `vcf` format. To do that, a dataset with genotypes (data varying between 0 and ploidy level) and a map file containing the SNP’s physical coordinates are needed. We used genotypes from potato database (<https://figshare.com/articles/Supplemental_Material_for_Enciso-Rodriguez_et_al_2018/6262214>). Note that our function randomly generates the phases in the `vcf` file. In order to generate linkage disequilibrium, we used pSBVB parameters EXPAND\_BASEPOP and INDFIRST, which simultaneously exclude the initial individuals and generate a new set of founders.
 
 Furthermore, the `toy_potato/FilesGenerator.R` file have all the functions needed to create a Chip, pedigree, QTNs location files and run potato example.
 
@@ -426,7 +436,7 @@ G<-G[,colnames(G)%in%map[,1]]
 dim(G)
 ```
 
-    ## [1] 150 418
+    ## [1] 150 415
 
 ``` r
 #generate genotypes vcf format 
@@ -464,7 +474,7 @@ S<-GBlup_predict(G=G,y=y,h2=h2,make_predictions=make_predictions,ntraits=ntraits
 S$rho
 ```
 
-    ## [1] 0.4062571
+    ## [1] 0.4544855
 
 ``` r
 Phenohat<-S$uhat[make_predictions] + S$mean
@@ -486,7 +496,7 @@ ggplot(datos, aes(y=Yhat, x=Y,colour="red")) +
         panel.grid.minor = element_blank(), legend.position ="none")
 ```
 
-![](help_addfunctions_version2_files/figure-markdown_github/unnamed-chunk-26-1.png)
+![](help_addfunctions_version2_files/figure-markdown_github/unnamed-chunk-27-1.png)
 
 ``` r
 #Assesing PA using Relationship Matrix
@@ -494,7 +504,7 @@ SR<-GBlup_predict(G=RelMatrix,y=y,h2=h2,make_predictions=c(401:550),ntraits=ntra
 SR$rhoM
 ```
 
-    ## [1] 0.3278878
+    ## [1] 0.380151
 
 ``` r
 #plotting predictions with relationship matrix
@@ -511,7 +521,7 @@ ggplot(datos_r, aes(y=Yhat, x=Y,colour="red")) +
         panel.grid.minor = element_blank(), legend.position ="none")
 ```
 
-![](help_addfunctions_version2_files/figure-markdown_github/unnamed-chunk-26-2.png)
+![](help_addfunctions_version2_files/figure-markdown_github/unnamed-chunk-27-2.png)
 
 Toy Strawberry dataset
 ======================
@@ -537,7 +547,7 @@ S<-GBlup_predict(G=G_1,y=y_1,h2=h2,make_predictions=make_predictions,ntraits=ntr
 S[[3]]$rho
 ```
 
-    ## [1] 0.4977226
+    ## [1] 0.4563458
 
 ``` r
 Phenohat<-S[[3]]$uhat[make_predictions] + S[[3]]$mean
@@ -555,7 +565,7 @@ ggplot(datos, aes(y=Yhat, x=Y,colour="red")) +
         panel.grid.minor = element_blank(), legend.position ="none")
 ```
 
-![](help_addfunctions_version2_files/figure-markdown_github/unnamed-chunk-28-1.png)
+![](help_addfunctions_version2_files/figure-markdown_github/unnamed-chunk-29-1.png)
 
 ### Compute predictive ability from model with dominant effects
 
@@ -583,14 +593,14 @@ SR<-GBlup_predict(G=R,y=y_2,h2=h2,make_predictions=c(354:503),ntraits=ntraits)
 S$rhoM
 ```
 
-    ## [1] 0.4917156
+    ## [1] 0.4735032
 
 ``` r
 # print the PA from RELATIONSHIP MODEL
 SR$rhoM
 ```
 
-    ## [1] 0.4356484
+    ## [1] 0.3762976
 
 ### Computing PA from MIMIC\_DIPLOID G matrix
 
@@ -612,14 +622,14 @@ SR<-GBlup_predict(G=R,y=y_3,h2=h2,make_predictions=c(354:503),ntraits=1)
 S$rhoM
 ```
 
-    ## [1] 0.5245551
+    ## [1] 0.5557401
 
 ``` r
 #correlation with Numerator relationship matrix
 SR$rhoM
 ```
 
-    ## [1] 0.4513917
+    ## [1] 0.3952689
 
 ### Computing PA from MIMIC\_HAPLOID G matrix
 
@@ -640,14 +650,14 @@ SR<-GBlup_predict(G=R,y=y_4,h2=h2,make_predictions=c(354:503),ntraits=1)
 S$rhoM
 ```
 
-    ## [1] 0.3436626
+    ## [1] 0.3381267
 
 ``` r
 #Numerator Relationship PA
 SR$rhoM
 ```
 
-    ## [1] 0.3486037
+    ## [1] 0.522501
 
 #### Strawberry complete dataset
 
@@ -659,16 +669,16 @@ L. Zingaretti, A. Monfort, M. Pérez-Enciso. 2018. pSBVB: a versatile simulation
 
 Pérez-Enciso, M., Forneris, N., de los Campos, G., & Legarra, A. (2016). Evaluating sequence-based genomic prediction with an efficient new simulator. Genetics, genetics-116.
 
-Appendix: full list of options in parameter file
-================================================
+Appendix
+========
+
+### full list of options in parameter file
 
 `NTRAIT` \#--&gt; specifies no. of traits (int, \[0\])
 
 `PLOIDY` \#--&gt; specifies ploidy (int, \[2\])
 
 `QTLFILE` !--&gt; file with qtl posns (chr& bp) add &dom effects can be defined in cols 3 & 4 (str)
-
-`PEDFILE` !--&gt; !--&gt; file name with pedigree (only integer numbers allowed, 0 for unknown) pedfile
 
 `SNPFILE` !--&gt; file with genotyped snps: chr, bp, can be repeated
 
@@ -683,10 +693,6 @@ Appendix: full list of options in parameter file
 `OUTQFILE` !--&gt; output qtl file out\_q\_file
 
 `OUTYFILE` !--&gt; y outfile outyfile
-
-`OUTMFILE` !--&gt; output file with mkr data
-
-outmfile
 
 `GZIP` !--&gt; compress output files
 
