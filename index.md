@@ -1,11 +1,12 @@
+Purpose
+=======
 
-### Purpose
-
-Polyploid sequence based virtual breeding (**pSBVB**) is a modification of **SBVB** software (Pérez-Enciso et al. 2017) that allows simulating traits of an arbitrary genetic complexity in polyploids. Its goal is to simulate complex traits and genotype data starting with a `vcf` file that contains the genotypes of founder individuals and following a given pedigree. The main output are the genotypes of all individuals in the pedigree and/or molecular relationship matrices (GRM) using all sequence or a series of SNP lists, together with phenotype data. The program implements very efficient algorithms where only the recombination breakpoints for each individual are stored, therefore allowing the simulation of thousands of individuals very quickly. Most of computing time is actually spent in reading the `vcf` file. Future developments will optimize this step by reading and writing binary mapped files. The `vcf` file may not contain missing genotypes and is assumed to be phased. Link to full manual: <https://github.com/lauzingaretti/pSBVB/blob/master/Manual.pdf>
+Polyploid sequence based virtual breeding (**pSBVB**) is a modification of SBVB software (Pérez-Enciso et al. 2016) that allows simulating traits of an arbitrary genetic complexity in polyploids. Its goal is to simulate complex traits and genotype data starting with a vcf file that contains the genotypes of founder individuals and following a given pedigree. The main output are the genotypes of all individuals in the pedigree and/or molecular relationship matrices (**GRM**) using all sequence or a series of SNP lists, together with phenotype data. The program implements very efficient algorithms where only the recombination breakpoints for each individual are stored, therefore allowing the simulation of thousands of individuals very quickly. Most of computing time is actually spent in reading the `vcf` file. Future developments will optimize this step by reading and writing binary mapped files. The `vcf` file may not contain missing genotypes and is assumed to be phased.
 
 ![General Software' View](generalview.png)
 
-### Main features
+Main features
+=============
 
 -   Any number of traits.
 -   Tool adapted to work with both, auto and allo-polyploid organisms.
@@ -18,9 +19,10 @@ Polyploid sequence based virtual breeding (**pSBVB**) is a modification of **SBV
 -   It allow to compute Genomic relationship matrix in several ways.
 -   Any number of chromosomes, allows for sex chromosomes and varying local recombination rates, that can be sex specific.
 
-### Installation
+Installation
+============
 
-:computer: The source code, manual and examples can be obtained from <https://github.com/lzingaretti/pSBVB>
+The source code, manual and examples can be obtained from <https://github.com/lzingaretti/pSBVB>
 
 To compile:
 
@@ -40,7 +42,9 @@ To install in /usr/local/bin
 sudo make install
 ```
 
-The program requires blas libraries but these are standard in any unix or OS mac system. We have tested pSBVB only in linux with gfortran compiler; intel ifort seems not working, but gfortran in mac OS looks ok. Usage
+The program requires blas libraries but these are standard in any unix or OS mac system. We have tested pSBVB only in linux with gfortran compiler; intel ifort seems not working, but gfortran in mac OS looks ok.
+
+<span style="color:#cc66ff; font-family:Georgia; font-weight: bold ">USAGE:</span>
 
 To run: if you have a .vcf file
 
@@ -54,7 +58,7 @@ if you have a .gen file
  file.gen | pSBVB -isbvb.par
 ```
 
-with alleles coded as *0/1*. To run the program with the same random seed:
+with alleles coded as *0/1*. In the gen file, the first two rows contain the chromosome and SNP position (in base pairs), and the following columns contain the genotypes (coded *0,1,…h*) for each of the individuals of the founder population. To run the program with the same random seed:
 
 ``` r2
 … | pSBVB -isbvb.par –seed iseed
@@ -62,13 +66,8 @@ with alleles coded as *0/1*. To run the program with the same random seed:
 
 where iseed is an integer number
 
-The general format of the input file looks like that:
-
-**allele1\_snp1\_ind1 allele2\_snp1\_ind1 allele3\_snp1\_ind1 ... allelep\_snp1\_ind1 allele1\_snp1\_ind2 allele2\_snp1\_ind2 allele3\_snp1\_ind2 ... allelep\_snp1\_indp**
-
-**allele1\_snp2\_ind1 allele2\_snp2\_ind1 allele3\_snp2\_ind1 ... allelep\_snp2\_ind1 allele1\_snp2\_ind2 allele2\_snp2\_ind2 allele3\_snp2\_ind2 ... allelep\_snp2\_indp**
-
-### Parameter file
+Parameter file
+==============
 
 The parameter file controls all **pSBVB** behavior. It consists of a list of sections in UPPER CASE (in any order) followed in the next line by the required data, e.g.,
 
@@ -76,9 +75,9 @@ The parameter file controls all **pSBVB** behavior. It consists of a list of sec
 
 sbvb.qtl
 
-tells the program that **QTN** specifications are in sbvb.qtl file. Comments can be mixed starting with \# or ! A full list of options in the parameter file is in Appendix 1. In the following, we list the main ones.
+tells the program that **QTN** specifications are in sbvb.qtl file. Comments can be mixed starting with \# or ! A full list of options in the parameter file is in Appendix 1.The main ones are:
 
-### Specifying genetic architecture
+<span style="color:#cc66ff; font-family:Georgia; font-weight: bold ">Specifying genetic architecture:</span>
 
 If more than one trait is generated, then use
 
@@ -86,52 +85,29 @@ If more than one trait is generated, then use
 
 ntraits
 
-in parameter file. Otherwise this section is not needed. **pSBVB** requires the user to provide the list of causal SNPs (**QTNs**) as specified in **QTNFILE** section. The format of the QTN file is the next:
+in parameter file. Otherwise this section is not needed. **pSBVB** requires the user to provide the list of causal SNPs (**QTNs**) as specified in **QTNFILE** section. The format of the QTN file is an orderedfile containing:
 
-| i\_chrom | i\_pos |
-|:---------|:------:|
+``` r2
+|i_chrom |i_pos|
+```
+
+<span style="color:#00cc66; font-family:Georgia; font-weight: bold">WARNING:</span> chromosome ids must be integer consecutive numbers
 
 or
 
-| <span style="font-size: 6pt">i\_chrom </span> | <span style="font-size: 6pt">i\_pos</span> | <span style="font-size: 6pt"> add\_eff\_Trait\_1 </span> | <span style="font-size: 6pt"> add\_eff\_Trait\_2 </span> | <span style="font-size: 6pt">... </span> | <span style="font-size: 6pt"> add\_eff\_Trait\_n </span> |
-|:----------------------------------------------|:------------------------------------------:|:--------------------------------------------------------:|:--------------------------------------------------------:|:----------------------------------------:|----------------------------------------------------------|
+``` r2
+|i_chrom |i_pos| add_eff_Trait_1 | add_eff_Trait_2| ...|add_eff_Trait_n|
+```
 
-or to additive and dominant effects: (:octocat:)
+or to additive and dominant effects:
 
-<table style="width:100%;">
-<colgroup>
-<col width="9%" />
-<col width="9%" />
-<col width="9%" />
-<col width="9%" />
-<col width="9%" />
-<col width="9%" />
-<col width="9%" />
-<col width="9%" />
-<col width="9%" />
-<col width="9%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="center"><span style="font-size: 6pt">i_chrom </span></th>
-<th align="center"><span style="font-size: 6pt">i_pos</span></th>
-<th align="center"><span style="font-size: 6pt"> add_eff_Trait_1 </span></th>
-<th align="center"><span style="font-size: 6pt"> add_eff_Trait_2 </span></th>
-<th align="center"><span style="font-size: 6pt">... </span></th>
-<th align="center"><span style="font-size: 6pt"> add_eff_Trait_n </span></th>
-<th align="center"><span style="font-size: 6pt"> dom_eff_Trait_1 </span></th>
-<th align="center"><span style="font-size: 6pt"> dom_eff_Trait_2 </span></th>
-<th align="center"><span style="font-size: 6pt">... </span></th>
-<th align="center"><span style="font-size: 6pt"> dom_eff_Trait_n </span></th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table>
+``` r2
+|i_chrom |i_pos| add_eff_Trait_1 | add_eff_Trait_2| ...|add_eff_Trait_n| dom_eff_Trait_1 | dom_ef_Trait_2 | ...|dom_eff_Trait_n|
+```
 
-The bellow file, must separated by spaces, and where *ichr* is chromosome and *ipos* is position in base pair, *add\_eff* is additive effect, i.e the effect of homozygous alleles and *dom\_eff* is the heterozygous effect.
+where *ichr* is chromosome and *ipos* is position in base pair, *add\_eff* is additive effect, i.e the effect of homozygous alleles and *dom\_eff* is the heterozygous effect.
 
-<span style="color:red; font-family:Georgia; font-weight: bold; background-color: #FFFF00 ">WARNING:</span> **QTN** position must coincide with one **SNP** position in the `vcf` file, otherwise it is not considered.
+<span style="color:#00cc66; font-family:Georgia; font-weight: bold ">WARNING:</span> **QTN** position must coincide with one **SNP** position in the `vcf` file, otherwise it is not considered.
 
 If QTN effects are not provided, they can be simulated specifying
 
@@ -157,19 +133,20 @@ The default value is 50%. By default, effects are sampled independently of frequ
 
 rho
 
-This option can be useful to simulate past selection.
+This option can be useful to simulate past selection(Pérez-Enciso et al., 2016).
 
-The narrow sense heritability is specified as:
+The broad sense heritability is specified as:
 
 **H2G**
 
 h2
 
-The software incorporates the broad sense heritability (using **H2G**). Only the genotypes from the base population (in the `vcf` file) are used to adjust heritability.
+The software incorporates the broad sense heritability (using **H2G**). The genotypes from the base population (in the `vcf` file) are used to adjust the environmental variance such that the heritability is as desired.
 
-### Phenotyping simulations
+Phenotyping simulations
+=======================
 
-As **pSBVB** takes ploidy into account to generate the phenotypes and incorporates several options to generate the molecular relationship matrix that are pertinent to polyploids. In a diploid organism, the phenotype for *i*-th individual can be simulated from:
+**pSBVB** takes ploidy into account to generate the phenotypes and incorporates several options to generate the molecular relationship matrix that are pertinent to polyploids. In a diploid organism, the phenotype for *i*-th individual can be simulated from:
 
 $y\_{i}=\\mu + \\sum\_{j=1}^{Q} \\gamma\_{ij}\\alpha\_j + \\sum\_{j=1}^{Q} \\delta\_{ij}d\_j + \\epsilon\_i$
 
@@ -177,9 +154,9 @@ Where *μ* is the mean general, *α* is the additive effect of *j*-th locus, tha
 
 $y\_{i}=\\mu + \\sum\_{j=1}^{Q} \\eta\_{ij}\\alpha\_j + \\sum\_{j=1}^{Q} \\phi\_{ij}d\_j + \\epsilon\_{i}$
 
-where *η*<sub>*i**j*</sub> is the number of copies of the alternative allele (coded say as 1) minus half the ploidy (*h*/2) for *j*-th locus and *i*-th individual, and *α*<sub>*j*</sub> is therefore the expected change in phenotype per copy of allele ‘1’ in the *j*-th locus. In polyploids, as many dominance coefficients as ploidy level (*h*) minus two can technically be defined. However, this results in an over-parameterized model that is of no practical use. Here instead we define the *ϕ*<sub>*i**j*</sub> parameter as the minimum number of copies of allele 1 such that the expected phenotype is *d*. By default, **pSBVB** uses *ϕ*<sub>*i**j*</sub> = 1 , that is, any genotype having at least one allele ‘1’ and ‘0’ has the expected phenotypic value *d*. You can coded *ϕ*<sub>*i**j*</sub> as any integer between 1 and *h* − 1. Finally, the residual *ϵ*<sub>*i*</sub> is sampled from a *N* ∼ (0, *v**e*), where *v**e* is adjusted given either **H2** or **H2G** using the genotypes from the base popula2tion. For multiple traits, the fields **H2** or **H2G**, **RHOQA**, and **QTLDISTA** and **QTLDISTD** must be repeated, eg, for two traits:
+where *η*<sub>*i**j*</sub> is the number of copies of the alternative allele (coded say as 1) minus half the ploidy (*h*/2) for *j*-th locus and *i*-th individual, and *α*<sub>*j*</sub> is therefore the expected change in phenotype per copy of allele ‘1’ in the *j*-th locus. In polyploids, as many dominance coefficients as ploidy level (*h*) minus two can technically be defined. However, this results in an over-parameterized model that is of no practical use. Here instead we define the *ϕ*<sub>*i**j*</sub> parameter as the minimum number of copies of allele 1 such that the expected phenotype is *d*. By default, **pSBVB** uses *ϕ*<sub>*i**j*</sub> = 1 , that is, any genotype having at least one allele ‘1’ and ‘0’ has the expected phenotypic value *d*. You can coded *ϕ*<sub>*i**j*</sub> as any integer between 1 and *h* − 1. Finally, the residual *ϵ*<sub>*i*</sub> is sampled from a *N* ∼ (0, *v**e*), where *v**e* is adjusted given either **H2G** using the genotypes from the base population. For multiple traits, the fields **H2** or **H2G**, **RHOQA**, and **QTLDISTA** and **QTLDISTD** must be repeated, eg, for two traits:
 
-**H2**
+**H2G**
 
 0.5
 
@@ -197,9 +174,10 @@ u -0.2 0.2
 
 g 1 0.5
 
-which means that the firts trait have a heredability of 0.5, a **RHOQA** parameter of 0 and **QTNDISTA** have an uniform distribution (0.2, 0.2) and the second trait have a heredability of 0.23, **RHOQA** parameter is −0.4 and **QTNDISTA** have a gamma distribution with parameters (1, 0.5)
+which means that the firts trait have a heritability of 0.5, a **RHOQA** parameter of 0 and **QTNDISTA** have an uniform distribution (0.2, 0.2) and the second trait have a heritability of 0.23, *R**H**O**Q**A* parameter is −0.4 and *Q**T**N**D**I**S**T**A* have a gamma distribution with parameters (1, 0.5).
 
-### Recombination in polyploids
+Recombination in polyploids
+===========================
 
 The ploidy level must be specified with section
 
@@ -219,11 +197,12 @@ rho\_elements
 
 where rho\_elements is a vector of hxh elements specifying the probability of recombination between i and j homeologs. The diagonal (P of recombining with itself) is set to 0 by the program.
 
-### Pedigree file (PEDFILE)
+Pedigree file (PEDFILE)
+=======================
 
-The format is id id\_father id\_mother \[sex\]
+The format is id id\_father id\_mother
 
-where all ids must be consecutive integers, 0 if father or mother unknown, sex is optional (1 for males, 2 for females) and only needed if *sex* chr is specified. The number of individuals in the `vcf` file must be specified with section:
+where all ids must be consecutive integers, 0 if father or mother unknown. The number of individuals in the `vcf` file must be specified with section:
 
 **NBASE**
 
@@ -231,27 +210,31 @@ nbase
 
 in the parfile. The pedigree file must contain the first rows as
 
-| <span style="font-weight:normal"> 1 </span> | <span style="font-weight:normal"> 0 </span> | <span style="font-weight:normal"> 0 </span> |
-|---------------------------------------------|---------------------------------------------|---------------------------------------------|
-| 2                                           | 0                                           | 0                                           |
-| ...                                         | 0                                           | 0                                           |
-| nbase                                       | 0                                           | 0                                           |
+``` r2
+|  1  | 0 | 0 |
+|  2  | 0 | 0 |
+| ... | 0 | 0 |
+|nbase| 0 | 0 | 
+```
 
 that is, those in `vcf` file are assumed to be unrelated.
 
-### Recombination map files
+Recombination map files (MAPFILE)
+=================================
 
 By default, **pSBVB** assumes a cM to Mb ratio of 1. This ratio can be changed genomewide with **CM2MB** section in the par file. In addition, local recombination rates can be specified with the **MAPFILE** section. The mapfile takes format
 
 **MAPFILE**
 
-| ichr | last\_bp | local\_cm2mb |
-|:----:|:--------:|:------------:|
+``` r2
+| ichr | last_bp | local_cm2mb |
+```
 
 where **local\_cm2mb** is the recombination rate between **last\_bp** and previous bound (1 bp if first segment) , or
 
-| ichr | last\_bp | local\_cm2mbMales | local\_cm2mb\_females |
-|:----:|:--------:|:-----------------:|:---------------------:|
+``` r2
+| ichr | last_bp | local_cm2mbMales | local_cm2mb_females|
+```
 
 The maximum number of chromosomes allowed by default is 23; should you require more, then section **MAXNCHR** must be included as:
 
@@ -259,43 +242,45 @@ The maximum number of chromosomes allowed by default is 23; should you require m
 
 nchrom
 
-**pSBVB** permits sex chromosomes. The sex chromosome must be declared with **SEXCHR** section. Then, sex 1 is assumed to be the heterogametic sex, and a sex column should be present in the **PEDFILE**.
-
-<span style="color:red; font-family:Georgia; font-weight: bold; background-color: #FFFF00 ">WARNING:</span> chromosome ids must be integer consecutive numbers, even for the sex chr if present.
-
-### SNP files
+SNP files
+=========
 
 **pSBVB** can compute the genomic relationship matrix for all sequence data (in two specific ways, see bellow), and/or specific SNP subsets to mimic different genotyping arrays. Several **SNP** lists can be analyzed in the same run repeating the **SNPFILE** section in the par file. Each **SNP** file has the same format as the QTN file, i.e., chromosome and base pair position, as idicated:
 
 **SNPFILE**
 
-| i\_chrom | i\_pos |
-|:--------:|:------:|
+``` r2
+| i_chrom | i_pos |
+```
 
-if you add the command **MIMICDIPLOID** to parameter file, then Genomic relationship matrix is computed assuming than only presence or absence of the alternative allele could be known for the remaining, i.e., although the organism was polyploid, Genomic matrix is computed mimic diploid.
+if you add the command **MIMICHAPLOID**, Genomic matrix is computed mimic diploid. Only 0, 1 and 2 or more copies of a given allele can be distinguished. In this case, all genotypes with values larger than 2 are assumed to be observed as '2',then molecular matrix has elements ranging between 0 and 2 and ploidy is set to 2.
+
+if you add **MIMIC\_HAPLOID** to parameter file, it is assumed that only one full homozygous can be distinguished for the rest of genotypes, then the molecular matrix has elements ranging between 0 and 1 and ploidy is set to 1.
 
 Output
-------
+======
 
 The program writes some general info on the screen, and the following files:
 
-• **OUTYFILE** format (contains phenotypes and breeding values):
+-   **OUTYFILE** format (contains phenotypes and breeding values):
 
-| *i**d* | *y* | *a**d**d*<sub>*i*</sub>, *i* = 1, ..,*n**t**r**a**i**t**s* | (*a**d**d* + *d**o**m*)<sub>*i*</sub>, *i* = 1, ..,*n**t**r**a**i**t**s* |
-|:------:|:---:|:----------------------------------------------------------:|:------------------------------------------------------------------------:|
+``` r2
+| id| y | add__eff_i , i=1,..,ntraits | (add_eff+ dom_eff)_i, i=1,..,ntraits|
+```
 
-where *a**d**d* is the first sum in equation of **pSBVB** software, shows above and *d**o**m* is the second term. For several traits, first are printed all add effects for every trait, next add+dom.
+where *a**d**d*<sub>*e*</sub>*f**f* is the first sum in equation of **pSBVB** software, shows above and *d**o**m*<sub>*e*</sub>*f**f* is the second term. For several traits, first are printed all add effects for every trait, next add+dom.
 
-• **OUTQFILE** format (contains **QTN** info):
+-   **OUTQFILE** format (contains **QTN** info):
 
-| *i**c**h**r* | *p**o**s* | *f**r**e**q*<sub>*b**a**s**e*</sub> | (*a**d**d*<sub>*i*</sub>) | (*d**o**m*<sub>*i*</sub>) | *i* = 1, ..,*n**t**r**a**i**t**s* |
-|:------------:|:---------:|:-----------------------------------:|:-------------------------:|:-------------------------:|:---------------------------------:|
+``` r2
+| ichr| pos | freq_{base} | (add_eff_i)| (dom_eff_i)| i=1,..,ntraits|
+```
 
 where *i**c**h**r* is chromosome, *p**o**s* is *Q**T**N* bp position, *f**r**e**q*<sub>*b**a**s**e*</sub> is frequency in `.vcf` file, freq is frequency along the pedigree, plus additive, dominant effects and add variance (2*p**q**α*<sup>2</sup>) contribution for each locus by trait.
 
-• **OUTGFILE** format (contains GRM, one per SNPFILE plus sequence) A matrix of *n* × *n*, where *n* is the number of individuals in the pedigree. As many outgfiles as snpfiles are written with subscripts .1, .2 etc. .0 corresponds to sequence. To avoid using sequence, add **NOSEQUENCE** command in parfile.
+-   **OUTGFILE** format (contains GRM, one per SNPFILE plus sequence) A matrix of *n* × *n*, where *n* is the number of individuals in the pedigree. As many outgfiles as snpfiles are written with subscripts .1, .2 etc. .0 corresponds to sequence. To avoid using sequence, add **NOSEQUENCE** command in parfile.
 
-• **OUTMFILE** format (contains genotypes for evey SNP file and sequence, in plink format optionally using **OUTPLINK** in parfile). As many outmfiles as snpfiles are written with subscripts .1, .2 etc. .0 corresponds to sequence. To avoid using sequence, **NOSEQUENCE** in parfile
+-   **OUTMFILE** format (contains genotypes for evey SNP file and sequence, in plink format optionally using **OUTPLINK** in parfile). As many outmfiles as snpfiles are written with subscripts .1, .2 etc. .0 corresponds to sequence. To avoid using sequence, **NOSEQUENCE** in parfile
 
 Outqfile, outqtn, GRM and marker files are written only if the respective sections **OUTQFILE**, **OUTGFILE** and **OUTMFILE** appear in the `.par` file. Note in particular that **OUTMFILE** with sequence can be huge! To avoid printing sequence info, use
 
@@ -303,9 +288,22 @@ Outqfile, outqtn, GRM and marker files are written only if the respective sectio
 
 in par file.
 
-<span style="color:green; font-family:Georgia; font-weight: bold; background-color: #FFEF12 ">NOTE:</span> To compress marker output, include **GZIP** option in parfile.
+<span style="color:#3358ff;; font-family:Georgia; font-weight: bold&gt;NOTE:&lt;/span&gt; To compress marker output, include **GZIP** option in parfile.
 
-### Restart the program keeping the same haplotypes
+# Restart the program keeping the same haplotypes
+
+Sometimes one can be interested in running the same experiment but with different genetic architectures or different **SNP** arrays. The program offers two convenient ways to do this as it may keep track of haplotypes so exactly the same genetic structure is preserved, **RESTART** and **RESTARTQTL** options in ```.par``` file.
+
+1.With **RESTART**, haplotypes, phenotypes and **QTN** effects are preserved. This is useful to implement selection.
+
+2.With **RESTARTQTN**, haplotypes are preserved but phenotypes and **QTN** effects are sampled again. **RESTARQTN** can be used to run different genetic architectures in the same haplotypes so results can be exactly comparable across models.
+
+The program then writes a ```.hap``` file that contains all haplotype structure the first time is run. When **pSBVB** is called again with say another **SNPFILE**, then individuals have the same haplotypes as in previous runs and a new **GRM** can be generated with the new **SNP** file. An important application is to run selection. In fact, **pSBVB** can be run with different pedigree files and the **RESTART** option. **pSBVB** generates only new haplotypes for those individuals not in current ```.hap``` file. In a selection scheme, the user should add a new generation pedigree to current pedfile with the offspring of selected individuals. In the new run, **pSBVB** generates haplotypes and phenotypes for the new offspring.
+
+&lt;span style=" color:#3358ff;="" font-family:georgia;="" font-weight:="" bold"="">NOTE:</span> To compress marker output, include **GZIP** option in parfile.
+
+Restart the program keeping the same haplotypes
+===============================================
 
 Sometimes one can be interested in running the same experiment but with different genetic architectures or different **SNP** arrays. The program offers two convenient ways to do this as it may keep track of haplotypes so exactly the same genetic structure is preserved, **RESTART** and **RESTARTQTL** options in `.par` file.
 
@@ -315,34 +313,35 @@ Sometimes one can be interested in running the same experiment but with differen
 
 The program then writes a `.hap` file that contains all haplotype structure the first time is run. When **pSBVB** is called again with say another **SNPFILE**, then individuals have the same haplotypes as in previous runs and a new **GRM** can be generated with the new **SNP** file. An important application is to run selection. In fact, **pSBVB** can be run with different pedigree files and the **RESTART** option. **pSBVB** generates only new haplotypes for those individuals not in current `.hap` file. In a selection scheme, the user should add a new generation pedigree to current pedfile with the offspring of selected individuals. In the new run, **pSBVB** generates haplotypes and phenotypes for the new offspring.
 
-<span style="color:#3358ff; font-family:Georgia; font-weight: bold; background-color: #fff933 ">IMPORTANT:</span> The `.hap` file is used only if **RESTART** is included in parfile. If no `.hap` file is present, a new one is generated the first time. You can check that **RESTART** is in use checking, e.g, that all phenotypes are the same in different runs.
+<span style="color:#3358ff; font-family:Georgia; font-weight: bold">IMPORTANT:</span> The `.hap` file is used only if **RESTART** is included in parfile. If no `.hap` file is present, a new one is generated the first time. You can check that **RESTART** is in use checking, e.g, that all phenotypes are the same in different runs.
 
-<span style="color:red; font-family:Georgia; font-weight: bold; background-color: #FFFF00 ">WARNING:</span> **RESTARTQTN** is logically not suitable for selection, since effects are sampled anew in each run.
+<span style="color:#00cc66; font-family:Georgia; font-weight: bold ">WARNING:</span> **RESTARTQTN** is logically not suitable for selection, since effects are sampled anew in each run.
 
 ### Expanding the base population
 
 Very often, complete sequence is available only for very few individuals. **pSBVB** implements an automatic option to generate additional individuals by randomly crossing the available ones and random breeding for a pre specified number of generations. To use this feature, the pedigree file must contain larger number of individuals with unknown parents than in the `vcf` file. For instance, assume your `vcf` file contains only four individuals and the pedfile is
 
-|  <span style="font-weight:normal"> 1 </span>| <span style="font-weight:normal"> 0 </span> | <span style="font-weight:normal"> 0 </span> |
-|--------------------------------------------:|---------------------------------------------|---------------------------------------------|
-|                                            2| 0                                           | 0                                           |
-|                                            3| 0                                           | 0                                           |
-|                                          ...| 0                                           | 0                                           |
-|                                           20| 0                                           | 0                                           |
-|                                           21| 1                                           | 12                                          |
-|                                          ...| ...                                         | ...                                         |
+``` r2
+|  1  | 0 | 0 |
+|  2  | 0 | 0 |
+| ... | 0 | 0 |
+| 20  | 0 | 0 |
+| 21  | 1 | 7 |
+| ... | . | . |
+```
 
 Then individuals 5-20 are generated by randomly crossing 1-4 ids, from id 21 onwards, normal pedigree gene dropping is implemented. The option in parfile is
 
 **EXPAND\_BASEPOP**
 
-| ntgen | nfam |
-|:-----:|:----:|
+``` r2
+|ntgen| nfam |
+```
 
 which means that the new individuals are generated by crossing nfam individuals of the `vcf` file for ntgen generations.
 
-Examples
-========
+Toy Examples
+============
 
 ### Prepare your files
 
@@ -350,61 +349,36 @@ To facilitate the software' usability, we have written some additional functions
 
 ### Function to create a pedigree to use as .ped file
 
-Pedigree file is required to simulations. The number of founder individuals have to be equal or higher than the number of inviduals in .gen (or .vcf) file. The founders are those individuals whith genomic information.
+Pedigree file is required to simulate. The number of founder has to be equal or higher than the number of individuals in .gen (or `.vcf`) file. The founders are those individuals with genomic information.
 
-We provide a R function to generate pedigree file. You can choose any number of founder, generation, individuals by generation and sex specification is optional as well.
+We provide a R function to generate pedigree file. You can choose any number of founders, generations and individuals by generation.
 
-### Example 1: Generate a pedigree file
+The next pedigree file has 47 founders, 8 generations, 100 individuals of each generation from 1 to 7.
 
-The next pedigree file have 47 founders, 8 generations, 100 individuals of each generations from 1 to 7. The last generation have 1000 individuals. Sex is not considerer.
-
-``` pedigree_s
-source("pedigree.R")
+``` r2
+source("/Additional_functions/pedigree.R")
 M<-pedgenerator(100,4,c(rep(100,3),150),
-   sex=FALSE,
-   path="~/Dropbox/DoctoradoCRAG/paper-1/article/software-help/reversinn1/pSBVB/
-   toy_strawberry/Additional_functions",exclude=47)
+   path="/path_to_file/",exclude=47)
 ```
 
-### Example 2: Generate a pedigree file with sex option
+### To generate a pedigree based relationship matrix
 
-The next pedigree file have 47 founders, 8 generations, 100 individuals of each generations from 1 to 7. The last generation have 1000 individuals.
-
-``` pedigreematrix
-source("pedigree.R")
-M<-pedgenerator(100,4,c(rep(100,3),150),sex=FALSE,
-   path="~/Dropbox/DoctoradoCRAG/paper-1/article/software-help/reversinn1/pSBVB/toy_strawberry/
-   Additional_functions",exclude=47)
-```
-
-Generate a pedigree based relationship matrix
----------------------------------------------
-
-We had implemented a R function to generate a Relationship matrix to compare with genomic relationship matrix. Our function could be used to compute both, additive and dominant relationship matrices. To do the calculation, a pedigree file is needed as input. You can to use the pedigree matrix generated with pedigree.R as input.
+We implemented a R function to generate a Relationship matrix to compare with genomic relationship matrix. Our function could be used to compute both, additive and dominant relationship matrices. As input, a pedigree file is needed.
 
 ``` relationship
-source("RelationshipMatrix.R")
-data<-read.table("~/Dropbox/DoctoradoCRAG/paper-1/article/software-help/reversinn1/pSBVB
-                 /toy_strawberry/Additional_functions/File_st.ped",header=FALSE)
-#check the dimensions of dataset 
-
-A<-RelMatrix(data,dominance=FALSE,path= "~/Dropbox/DoctoradoCRAG/paper-1/article/software-help/reversinn1/pSBVB/toy_strawberry/Additional_functions/")
+source("/Additional_functions/RelationshipMatrix.R")
+data<-read.table("Path_to_File_st.ped",header=FALSE)
+A<-RelMatrix(data,dominance=FALSE,path= "path_to_file"")
 ```
 
-Application examples
-====================
+Run pSBVB
+=========
 
-Example: Generate strawberry simulated genotype + phenotype dataset using the previous pedigree file and several options.
--------------------------------------------------------------------------------------------------------------------------
+Once you have a genotypes, a pedigree, a list with SNPs and a Chip file. You can to create several `.par` files to perform simulations with different options.
 
-The parameter file (see file\_1.par) incorporate three "H2G" parameters of 0.3, 0.4 and 0.5. 150 causals SNP's to simulate the phenotype. This file simulated simultaneosly three pheno types with three additive effects. The Genomic Relationship matrix is generated using Gtota, then the M values varying between 0 and 8. The others files have the next options:
+Here, we give two toy dataset with examples, which are in `/toy_potato` and `/toy_strawberry` folders.
 
--   file\_4.par --&gt; heredability of 0.5, generate 1 trait. Use GT as genomic relationship matrix. Additive and dominat effects are simulated from a gamma distribution with mean=0.2, shape= 0.2 and mean= 0.2, shape= 0.5 parameters respectively.
--   file\_5.par --&gt; heredability of 0.3, generate 1 trait. Use GT as genomic relationship matrix, 80 QTNS
-
-You can run these models and others with files available in /toy\_strawberry folder.
-
-You can run all files simultaneosly using run\_toy\_st.sh file. You could run the program once:
+You could run several examples simultaneosly, by executing the `.sh` files in `/toy_potato` and `/toy_strawberry` folders as indicates here:
 
 ``` bash
 cat toy_st.gen | sbvb -i file_1.par
@@ -413,6 +387,7 @@ cat toy_st.gen | sbvb -i file_1.par
 or using a .sh file:
 
 ``` r2
+cd /path_to_/toy_strawberry (or path_to/toy_potato)
 ./run_toy_st.sh 
 ```
 
@@ -421,207 +396,32 @@ The next images show how it works:
 
 ![Run the program several times simultaneosly using a bash script](runbash.png)
 
-Statistical Models:
-===================
+GBLUP prediction:
+=================
 
-There are numerous GS methods that use genome-wide markers to predict breeding values and address the large *p* small *n* problem. Here, breeding values were predicted using GBLUP, which is a genomic-based extension of traditional BLUP (Henderson, 1984) and equivalent to Ridge Regression Model (RR-BLUP). The model is:
+There are numerous GS methods that use genome-wide markers to predict breeding values and address the large p small n problem. Here, breeding values were predicted using GBLUP, which is a genomic-based extension of traditional BLUP (Henderson, 1984) and equivalent to Ridge Regression Model (RR-BLUP). The model is:
 
-The R script to perform Predictive abilities is GBlupFunction.R
+The R script to perform Predictive abilities is /Additional\_Functions/GBlupFunction.R
 
-Running Model 1
----------------
-
-Here, we include the output from three models simultaneosly and we compared them with Pedigree Based models. Finally, we plot the estimated vs. true values. We only graph the thirth model (heritability parameters to each model were set on 0.3, 0.4 and 0.5).
-
-In this example, we have simulated three phenotypes simultaneosly. The GBlup Prediction, could be used to evaluated predictive of those traits ability simultaneosly.
-
-``` r
-library(ggplot2)
-#choose the dataset directory  using setwd() /results_example1 
-# Read y and G using 
-#G<- read.table("Y.grm.1")
-#y<- read.table("Y.outy")
-
-h2=c(0.3,0.4,0.5)
-ntraits=3
-make_predictions=c(353:503)
-
-S<-GBlup_predict(G=G,y=y,h2=h2,make_predictions=make_predictions,ntraits=ntraits)
-
-#Predictive ability computed with GModel 
-S[[3]]$rho
-```
-
-    ## [1] 0.5372807
-
-``` r
-Phenohat<-S[[3]]$uhat[make_predictions] + S[[3]]$mean
-Pheno<-S[[3]]$yout_corr[make_predictions]
-
-
-datos<-data.frame(Phenohat,Pheno)
-colnames(datos)<-c("Yhat","Y")
-
-ggplot(datos, aes(y=Yhat, x=Y,colour="red")) +
-geom_point(size=0.6) + scale_shape_manual(values=c(2,4)) + 
-ggtitle("Estimated values for testing set - Genomic matrix") +
-geom_abline(intercept=lm(Yhat ~ Y,data=datos)$coefficients[1], slope=lm(Yhat ~ Y,data=datos)$coefficients[2])+
-theme(panel.background = element_blank(),
-    panel.grid.major = element_blank(),
-    panel.grid.minor = element_blank(), legend.position ="none")
-```
-
-![](help_addfunctions_version2_files/figure-markdown_github/unnamed-chunk-13-1.png)
-
-Running Model 2
+Potato dataset:
 ===============
 
-This model includes dominant effects from an uniform distribution with parameters a=0.2, b=0.6
+We used a subset of 396 SNPs and 150 individuals from Enciso-Rodriguez et al. (2018) with genotypes coded between 0 and 4 (the potato ploidy level). We used these genotypes to generate a “vcf”- like file with random phases. SNP positions were obtained from Rosyara et al.
 
 ``` r
-source("GBlupFunction.R")
-setwd("/home/laura/Dropbox/DoctoradoCRAG/paper-1/article/software-help/reversinn1/pSBVB/toy_strawberry/results_example4/")
-
-G<- read.table("Y.grm.1")
-y<- read.table("Y.outy")
-#check matrix dimention
-setwd("/home/laura/Dropbox/DoctoradoCRAG/paper-1/article/software-help/reversinn1/pSBVB/toy_strawberry/")
-R<-read.table("Relationship.mat")
-#check matrix dimention
-R<-R[c(48:550),c(48:550)]
-#In the example one, we had been simulated three phenotypes simultaneosly. The GBlup Prediction, could be used to evaluated predictive of those traits ability simultaneosly. 
-h2=0.5
-ntraits=1
-make_predictions=c(354:503)
-
-S<-GBlup_predict(G=G,y=y,h2=h2,make_predictions=c(354:503),ntraits=ntraits)
-SR<-GBlup_predict(G=R,y=y,h2=h2,make_predictions=c(354:503),ntraits=ntraits)
-##gENETIC MODEL PA
-S$rhoM
+source("/Additional_Functions/pedigree.R")
+source("/Additional_Functions/RelationshipMatrix.R")
+source("/Additional_Functions/GBlupFunction.R")
+source("/Additional_Functions/generate_vcf_from_gen.R")
 ```
 
-    ## [1] 0.4299901
+We created a function to transform genotypes into ‘vcf’ format. To do that, a dataset with genotypes (data varying between 0 and ploidy level) and a map file containing the SNP’s physical coordinates are needed. We used genotypes from potato database (<https://figshare.com/articles/Supplemental_Material_for_Enciso-Rodriguez_et_al_2018/6262214>). Note that our function randomly generates the phases in the vcf file. In order to generate linkage disequilibrium, we used pSBVB parameters EXPAND\_BASEPOP and INDFIRST, which simultaneously exclude the initial individuals and generate a new set of founders.
+
+Furthermore, the `toy_potato/FilesGenerator.R` file have all the functions needed to create a Chip, pedigree, QTNs location files and run potato example.
 
 ``` r
-#RELATIONSHIP MODEL PA
-SR$rhoM
-```
-
-    ## [1] 0.5142909
-
-Example with MIMIC\_DIPLOID activate
-====================================
-
-This example includes an heritability parameter of 0.5, 150 QTN's effects from the 1500 available ones. The Genetic matrix was assesed asuming Diploid.
-
-``` r
-source("GBlupFunction.R")
-setwd("/home/laura/Dropbox/DoctoradoCRAG/paper-1/article/software-help/reversinn1/pSBVB/toy_strawberry/results_example2/")
-
-####with mimic diploid option
-
-G<- read.table("Y.grm.1")
-y<- read.table("Y.outy")
-#check matrix dimention
-dim(y)
-```
-
-    ## [1] 503   5
-
-``` r
-dim(G)
-```
-
-    ## [1] 503 503
-
-``` r
-setwd("/home/laura/Dropbox/DoctoradoCRAG/paper-1/article/software-help/reversinn1/pSBVB/toy_strawberry/")
-
-R<-read.table("Relationship.mat")
-#check matrix dimention
-dim(R)
-```
-
-    ## [1] 550 550
-
-``` r
-R<-R[c(48:550),c(48:550)]
-h2=0.5
-ntraits=1
-make_predictions=c(354:503)
-
-S<-GBlup_predict(G=G,y=y,h2=h2,make_predictions=c(354:503),ntraits=1)
-SR<-GBlup_predict(G=R,y=y,h2=h2,make_predictions=c(354:503),ntraits=1)
-#correlation with Genetic Matrix
-S$rhoM
-```
-
-    ## [1] 0.5116903
-
-``` r
-#correlation with Numerator relationship matrix
-SR$rhoM
-```
-
-    ## [1] 0.4031313
-
-Example with MIMIC\_HAPLOID
-===========================
-
-This example includes an heritability parameter of 0.5, 150 QTN's effects from the 1500 available ones. The Genetic matrix was assesed using MIMIC\_HAPLOID option.
-
-``` r
-source("GBlupFunction.R")
-setwd("/home/laura/Dropbox/DoctoradoCRAG/paper-1/article/software-help/reversinn1/pSBVB/toy_strawberry/results_example8/")
-####with mimic haploid option 
-G<- read.table("Y.grm.1")
-y<- read.table("Y.outy")
-setwd("/home/laura/Dropbox/DoctoradoCRAG/paper-1/article/software-help/reversinn1/pSBVB/toy_strawberry/")
-
-R<-read.table("Relationship.mat")
-#check matrix dimention
-R<-R[c(48:550),c(48:550)]
-h2=0.5
-make_predictions=c(354:503)
-
-S<-GBlup_predict(G=G,y=y,h2=h2,make_predictions=c(354:503),ntraits=1)
-SR<-GBlup_predict(G=R,y=y,h2=h2,make_predictions=c(354:503),ntraits=1)
-#Genomic PA
-S$rhoM
-```
-
-    ## [1] 0.4807767
-
-``` r
-#Numerator Relationship PA
-SR$rhoM
-```
-
-    ## [1] 0.4241474
-
-Examples with potato dataset:
-=============================
-
-``` r
-setwd("/home/laura/Dropbox/DoctoradoCRAG/paper-1/article/software-help/reversinn1/pSBVB/toy_strawberry/Additional_functions/")
-source("pedigree.R")
-source("RelationshipMatrix.R")
-```
-
-    ## Completed! Time = 0.00125  minutes
-
-``` r
-source("GBlupFunction.R")
-source("generate_vcf_from_gen.R")
-```
-
-We also created a function to transformate genotypes into 'vcf' format. To do that, you need a dataset with genotypes (data varying between 0 and ploidy level) and a map file, containing the SNP's physical coordinates. We used genotypes from potato database (<https://figshare.com/articles/Supplemental_Material_for_Enciso-Rodriguez_et_al_2018/6262214>). Note that, our function generate the vcf file randomly from genotype. In order to generate Linkage Disequilibrium, we could combine two pSBVB parameters: EXPAND\_BASEPOP and INDFIRST, which simultaneosly exclude the initial individuals and generate a new set of founder.
-
-Furthermore, the toy\_potato/FilesGenerator.R file have all the functions needed to create a Chip, pedigree, QTNs location files and run potato example.
-
-``` r
-setwd("/home/laura/Dropbox/DoctoradoCRAG/paper-1/article/software-help/reversinn1/pSBVB/toy_potato/")
-#read map file 
+# go to file containers folder
+# setwd("/toy_potato")
 map<-read.table("Sol_tet_mapa.map",sep="\t")
 #read genotype
 G<-read.delim("Pot_gen.gen",sep="\t")
@@ -632,7 +432,7 @@ G<-G[,colnames(G)%in%map[,1]]
 dim(G)
 ```
 
-    ## [1] 150 395
+    ## [1] 150 413
 
 ``` r
 #generate genotypes vcf format 
@@ -643,10 +443,8 @@ A=GenotoVcf(G,p=4,map,path="NULL")
 
 ``` r
 library(ggplot2)
-setwd("/home/laura/Dropbox/DoctoradoCRAG/paper-1/article/software-help/reversinn1/pSBVB/toy_strawberry/Additional_functions/")
-source("GBlupFunction.R")
+# data<-read.table("File_st.ped",header=FALSE)
 
-data<-read.table("/home/laura/Dropbox/DoctoradoCRAG/paper-1/article/software-help/reversinn1/pSBVB/toy_potato/File_st.ped",header=FALSE)
 #check the dimensions of dataset 
 #generate relationship matrix
 dim(data)
@@ -655,48 +453,33 @@ dim(data)
     ## [1] 700   3
 
 ``` r
-A<-RelMatrix(data,dominance=FALSE,path="/home/laura/Dropbox/DoctoradoCRAG/paper-1/article/software-help/reversinn1/pSBVB/toy_potato/")
-```
+A<-RelMatrix(data,dominance=FALSE)
 
-    ## Completed! Time = 0.002016667  minutes
+## make sure you're in the folder toy_potato 
 
-``` r
-setwd("/home/laura/Dropbox/DoctoradoCRAG/paper-1/article/software-help/reversinn1/pSBVB/toy_potato/results_potato/")
-
-G<- read.table("Y.grm.1")
-y<- read.table("Y.outy")
+#G<- read.table("/results_potato/Y.grm.1")
+#y<- read.table("/results_potato/Y.outy")
 RelMatrix<-A[-c(1:150),-c(1:150)]
 
 
 h2=0.5
 ntraits=1
-
+# split testing and training(the last 150 individuals are used to test)
 make_predictions=c(401:550)
-library(ggplot2)
 S<-GBlup_predict(G=G,y=y,h2=h2,make_predictions=make_predictions,ntraits=ntraits)
 S$rho
 ```
 
-    ## [1] 0.511987
+    ## [1] 0.5548584
 
 ``` r
 Phenohat<-S$uhat[make_predictions] + S$mean
 Pheno<-S$yout_corr[make_predictions]
-cor(Pheno,Phenohat)
-```
 
-    ## [1] 0.511987
-
-``` r
 datos<-data.frame(Phenohat,Pheno)
 colnames(datos)<-c("Yhat","Y")
-apply(datos,2,class)
-```
 
-    ##      Yhat         Y 
-    ## "numeric" "numeric"
-
-``` r
+#plotting predictions
 ggplot(datos, aes(y=Yhat, x=Y,colour="red")) +
   ggtitle("Estimated values for testing set - Genomic matrix")+
   geom_point(size=0.6) + scale_shape_manual(values=c(2,4)) + 
@@ -709,24 +492,22 @@ ggplot(datos, aes(y=Yhat, x=Y,colour="red")) +
         panel.grid.minor = element_blank(), legend.position ="none")
 ```
 
-![](help_addfunctions_version2_files/figure-markdown_github/unnamed-chunk-19-1.png)
+![](help_addfunctions_version2_files/figure-markdown_github/unnamed-chunk-26-1.png)
 
 ``` r
-make_predictions=c(401:550)
-
-
+#Assesing PA using Relationship Matrix
 SR<-GBlup_predict(G=RelMatrix,y=y,h2=h2,make_predictions=c(401:550),ntraits=ntraits)
 SR$rhoM
 ```
 
-    ## [1] 0.3104688
+    ## [1] 0.4068875
 
 ``` r
+#plotting predictions with relationship matrix
 Pheno<-SR$yout_corr[make_predictions]
 datos_r<-data.frame(Phenohat,Pheno)
 colnames(datos_r)<-c("Yhat","Y")
 
-#Pedigree Prediction 
 ggplot(datos_r, aes(y=Yhat, x=Y,colour="red")) +
   geom_point(size=0.6) + scale_shape_manual(values=c(2,4)) + 
   geom_abline(intercept=lm(Yhat ~ Y,data=datos_r)$coefficients[1], slope=lm(Yhat ~ Y,data=datos_r)$coefficients[2])+
@@ -736,31 +517,167 @@ ggplot(datos_r, aes(y=Yhat, x=Y,colour="red")) +
         panel.grid.minor = element_blank(), legend.position ="none")
 ```
 
-![](help_addfunctions_version2_files/figure-markdown_github/unnamed-chunk-19-2.png)
+![](help_addfunctions_version2_files/figure-markdown_github/unnamed-chunk-26-2.png)
 
-**Citation** L. Zingaretti, A. Monfort, M. Pérez-Enciso. 2018. pSBVB: a versatile simulation tool to evaluate genomic selection in polyploid species. Manuscript submitted for publication. M. Pérez-Enciso, N. Forneris, G. de los Campos, A. Legarra. An evaluation of sequence-based genomic prediction in pigs using an efficient new simulator. Submitted.
+Toy Strawberry dataset
+======================
 
-Appendix
---------
+### Running toy\_strawberry using three heritabilities parameters
 
-`NTRAIT`
+The first example (in path `/toy_strawberry/file_1.par`) incorporate three "H2G" parameters of 0.3, 0.4 and 0.5 and 150 causals SNPs to simulate the phenotype. The three phenotypes with additive effects are simulated simultaneosly. The Genomic Relationship matrix is generated using G- total, then the M values varying between 0 and 8. We show the PA obtained by the thirth output:
+
+``` r
+library(ggplot2)
+## make sure you're in the folder toy_strawberry and you has been executed /run_toy_st.sh file, which generates all examples folder and outputs 
+#G<- read.table("/results_example1/Y.grm.1")
+#y<- read.table("/results_example1/Y.outy")
+
+h2=c(0.3,0.4,0.5)
+ntraits=3
+#select training population 
+make_predictions=c(353:503)
+
+S<-GBlup_predict(G=G,y=y,h2=h2,make_predictions=make_predictions,ntraits=ntraits)
+
+#Predictive ability computed with GModel 
+S[[3]]$rho
+```
+
+    ## [1] 0.5652201
+
+``` r
+Phenohat<-S[[3]]$uhat[make_predictions] + S[[3]]$mean
+Pheno<-S[[3]]$yout_corr[make_predictions]
+
+datos<-data.frame(Phenohat,Pheno)
+colnames(datos)<-c("Yhat","Y")
+
+ggplot(datos, aes(y=Yhat, x=Y,colour="red")) +
+  geom_point(size=0.6) + scale_shape_manual(values=c(2,4)) + 
+  ggtitle("Estimated values for testing set - Genomic matrix") +
+  geom_abline(intercept=lm(Yhat ~ Y,data=datos)$coefficients[1], slope=lm(Yhat ~ Y,data=datos)$coefficients[2])+
+  theme(panel.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(), legend.position ="none")
+```
+
+![](help_addfunctions_version2_files/figure-markdown_github/unnamed-chunk-28-1.png)
+
+### Compute predictive ability from model with dominant effects
+
+This model includes dominant effects from an uniform distribution with parameters a=0.2, b=0.6
+
+``` r
+# read G and y from /toy_strawberry/results_example4/
+#G<- read.table("Y.grm.1")
+#y<- read.table("Y.outy")
+# read relationship matrix (R) from /toy_strawberry folder 
+#R<-read.table("Relationship.mat")
+
+# to eliminate the base population (first 47 individuals) 
+R<-R[c(48:550),c(48:550)]
+
+h2=0.5
+ntraits=1
+# split test and train 
+make_predictions=c(354:503)
+
+#genetic and predigree based model
+S<-GBlup_predict(G=G,y=y,h2=h2,make_predictions=c(354:503),ntraits=ntraits)
+SR<-GBlup_predict(G=R,y=y,h2=h2,make_predictions=c(354:503),ntraits=ntraits)
+## print the PA from GENETIC MODEL 
+S$rhoM
+```
+
+    ## [1] 0.422328
+
+``` r
+# print the PA from RELATIONSHIP MODEL
+SR$rhoM
+```
+
+    ## [1] 0.3422971
+
+### Computing PA from MIMIC\_DIPLOID G matrix
+
+This example includes a heritability parameter of 0.5 and 150 QTN’s. The Genetic matrix was computed with MIMIC\_DIPLOID option.
+
+``` r
+# read G and y from /toy_strawberry/results_example2/
+#G<- read.table("Y.grm.1")
+#y<- read.table("Y.outy")
+# Numerator relationship matrix is the same than before 
+
+h2=0.5
+ntraits=1
+make_predictions=c(354:503)
+
+S<-GBlup_predict(G=G,y=y,h2=h2,make_predictions=c(354:503),ntraits=1)
+SR<-GBlup_predict(G=R,y=y,h2=h2,make_predictions=c(354:503),ntraits=1)
+#correlation with Genetic Matrix
+S$rhoM
+```
+
+    ## [1] 0.5134952
+
+``` r
+#correlation with Numerator relationship matrix
+SR$rhoM
+```
+
+    ## [1] 0.4829468
+
+### Computing PA from MIMIC\_HAPLOID G matrix
+
+This snippet includes h2= 0.5 and 150 QTN’s The Genetic matrix was computed with MIMIC\_HAPLOID option.
+
+``` r
+# example from G generated through mimic haploid option  (results on /toy_strawberry/results_example8)
+#G<- read.table("Y.grm.1")
+#y<- read.table("Y.outy")
+#Numerator relationship matrix is always the same. 
+
+h2=0.5
+
+
+S<-GBlup_predict(G=G,y=y,h2=h2,make_predictions=c(354:503),ntraits=1)
+SR<-GBlup_predict(G=R,y=y,h2=h2,make_predictions=c(354:503),ntraits=1)
+#Genomic PA
+S$rhoM
+```
+
+    ## [1] 0.2827143
+
+``` r
+#Numerator Relationship PA
+SR$rhoM
+```
+
+    ## [1] 0.4788917
+
+#### Strawberry complete dataset
+
+The complete GBS data set is in `Data_strawberry` folder in GitHub (<https://github.com/lauzingaretti/pSBVB>).
+
+**Citation**
+
+L. Zingaretti, A. Monfort, M. Pérez-Enciso. 2018. pSBVB: a versatile simulation tool to evaluate genomic selection in polyploid species. Manuscript submitted for publication. Pérez-Enciso, M., Forneris, N., de los Campos, G., & Legarra, A. (2016). Evaluating sequence-based genomic prediction with an efficient new simulator. Genetics, genetics-116.
+
+Appendix: full list of options in parameter file
+================================================
+
+`NTRAIT` \#--&gt; specifies no. of traits
 ntrait
 
-`PLOIDY`
+`PLOIDY` \#--&gt; specifies ploidy
 
 P
 
-`MAXNCHR` !—&gt; max no. of chromosomes \[23\] maxnchr
-
-`SEXCHR` !--&gt; chr id (number) of sex chromosome, ! males(sex=1) are assumed to be the heterogametic sex, chr Y is not considered
-
-sexchr
+`MAXNCHR` \# !—&gt; max no. of chromosomes \[23\] maxnchr
 
 `QTLFILE` !--&gt; file with qtl posns (chr& bp) add &dom effects can be defined in cols 3 & 4 qtlfile
 
-`EPIFILE` epifile
-
-`PEDFILE` pedfile
+`PEDFILE` !--&gt; !--&gt; file name with pedigree (only integer numbers allowed, 0 for unknown) pedfile
 
 `SNPFILE` !--&gt; file with genotyped snps: chr, bp, can be repeated snpfile
 
@@ -782,9 +699,7 @@ outmfile
 
 `GZIP` !--&gt; compress output files
 
-`NBASE` !--&gt;nind which genotypes are read from STDIN
-
-nbase
+`NBASE` !--&gt;nind which genotypes are read from `.vcf`or `.gen` file nbase
 
 `H2G` !--&gt; broad heritability h2g ! repeated if multiple traits
 
@@ -817,3 +732,4 @@ ntgen nfam
 `MIMIC_DIPLOID` !--&gt; this option assumes than only presence or absence of the alternative allele can be ascertained for genotypes’ values higher than 2 (only should be on if organism is polyploid)
 
 `MIMIC_HAPLOID` !--&gt; Assuming that only one allele can be distinguished for the others, i.e., that a given marker allele behaves as fully dominant.
+
