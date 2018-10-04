@@ -99,8 +99,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="#restart-the-program-keeping-the-same-haplotypes">Restart the program keeping the same haplotypes</a></li>
 <li><a href="#toy-examples">Toy Examples</a></li>
 <li><a href="#run-psbvb">Run pSBVB</a></li>
-<li><a href="#gblup-prediction">GBLUP prediction:</a></li>
-<li><a href="#potato-dataset">Potato dataset:</a></li>
+<li><a href="#gblup-prediction">GBLUP prediction</a></li>
+<li><a href="#potato-dataset">Toy potato dataset</a></li>
 <li><a href="#toy-strawberry-dataset">Toy Strawberry dataset</a></li>
 <li><a href="#appendix-full-list-of-options-in-parameter-file">Appendix: full list of options in parameter file</a></li>
 </ul>
@@ -345,7 +345,7 @@ A&lt;-RelMatrix(data,dominance=FALSE,path= &quot;path_to_file&quot;&quot;)</code
 </div>
 </div>
 <div id="gblup-prediction" class="section level1">
-<h1>GBLUP prediction:</h1>
+<h1>GBLUP prediction</h1>
 <p>There are numerous GS methods that use genome-wide markers to predict breeding values and address the large p small n problem. Here, breeding values were predicted using GBLUP, which is a genomic-based extension of traditional BLUP (Henderson, 1984) and equivalent to Ridge Regression Model (RR-BLUP). The model is:</p>
 <span class="math display">\[\begin{equation}
 \mathbf{y}=\mathbf{1^T}\mu+\mathbf{Z}u+\epsilon_i
@@ -354,7 +354,7 @@ A&lt;-RelMatrix(data,dominance=FALSE,path= &quot;path_to_file&quot;&quot;)</code
 <p>The R script to perform Predictive abilities is /Additional_Functions/GBlupFunction.R</p>
 </div>
 <div id="potato-dataset" class="section level1">
-<h1>Potato dataset:</h1>
+<h1>Toy potato dataset</h1>
 <p>We used a subset of 396 SNPs and 150 individuals from Enciso-Rodriguez et al. (2018) with genotypes coded between 0 and 4 (the potato ploidy level). We used these genotypes to generate a “vcf”- like file with random phases. SNP positions were obtained from Rosyara et al.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">source</span>(<span class="st">&quot;/Additional_Functions/pedigree.R&quot;</span>)
 <span class="kw">source</span>(<span class="st">&quot;/Additional_Functions/RelationshipMatrix.R&quot;</span>)
