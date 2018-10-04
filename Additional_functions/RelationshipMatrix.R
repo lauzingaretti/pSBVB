@@ -6,9 +6,9 @@
 #' @param data pedigree data with 3 column.Unknown are equal to zero. The first column is the individual index, the second the father and the last, the mather 
 #' @param dominance if true, returns the dominance relationship matrix
 #' @param path path to save the file. Default is NULL
+#' #####param slater if true, returns the additive autotetraploid relationship matrix as Slater (2013)
 #' 
 #' @return Matrix with the Relationship between the individuals.
-#'
 #'
 
 
@@ -70,9 +70,7 @@ RelMatrix <- function(data = NULL, dominance=FALSE,path=NULL){
     }
   
   
-  Time = as.matrix(proc.time()-Time)
-  cat("Completed! Time =", Time[3]/60," minutes \n")
-  #      "Visualization options: (matrix, w) \n ")
+
   
   rownames(A) <- colnames(A) <- data[,1]
   
@@ -87,7 +85,7 @@ RelMatrix <- function(data = NULL, dominance=FALSE,path=NULL){
   return(A)   
 }
 
-# data<-read.table("~/Dropbox/DoctoradoCRAG/paper-1/article/software-help/reversinn1/pSBVB/toy_strawberry/Additional_functions/File_st.ped",header=FALSE)
-# check the dimensions of dataset 
-# dim(data)
-# RelMatrix(data,dominance=FALSE,path= "~/Dropbox/DoctoradoCRAG/paper-1/article/software-help/reversinn1/pSBVB/toy_strawberry/Additional_functions/")
+data<-read.table("~/Dropbox/DoctoradoCRAG/paper-1/article/software-help/reversinn1/pSBVB/toy_strawberry/Additional_functions/File_st.ped",header=FALSE)
+#check the dimensions of dataset 
+dim(data)
+RelMatrix(data,dominance=FALSE,path= "~/Dropbox/DoctoradoCRAG/paper-1/article/software-help/reversinn1/pSBVB/toy_strawberry/Additional_functions/")
