@@ -13,7 +13,7 @@ A flexible, efficient gene dropping algorithm to simulate sequence based populat
 
 ## Getting Started
 
-Polyploid sequence based virtual breeding (**pSBVB**) is a modification of **SBVB** software (Pérez-Enciso et al. 2017) that allows simulating traits of an arbitrary genetic complexity in polyploids. Its goal is to simulate complex traits and genotype data starting with a ```vcf``` file that contains the genotypes of founder individuals and following a given pedigree. The main output are the genotypes of all individuals in the pedigree and/or molecular relationship matrices (GRM) using all sequence or a series of SNP lists, together with phenotype data. The program implements very efficient algorithms where only the recombination breakpoints for each individual are stored, therefore allowing the simulation of thousands of individuals very quickly. Most of computing time is actually spent in reading the ```vcf``` file. Future developments will optimize this step by reading and writing binary mapped files. The ```vcf``` file may not contain missing genotypes and is assumed to be phased. Manual: https://github.com/lauzingaretti/pSBVB/blob/master/Manual.pdf; full html: https://lauzingaretti.github.io/pSBVB/
+Polyploid sequence based virtual breeding (**pSBVB**) is a modification of **SBVB** software (Pérez-Enciso et al. 2017) that allows simulating traits of an arbitrary genetic complexity in polyploids. Its goal is to simulate complex traits and genotype data starting with a ```vcf``` file that contains the genotypes of founder individuals and following a given pedigree. The main output are the genotypes of all individuals in the pedigree and/or molecular relationship matrices (GRM) using all sequence or a series of SNP lists, together with phenotype data. The program implements very efficient algorithms where only the recombination breakpoints for each individual are stored, therefore allowing the simulation of thousands of individuals very quickly. Most of computing time is actually spent in reading the ```vcf``` file. Future developments will optimize this step by reading and writing binary mapped files. The ```vcf``` file may not contain missing genotypes and is assumed to be phased. Manual: https://lauzingaretti.github.io/pSBVB/
 
 ### Main Features
 
@@ -44,7 +44,6 @@ sudo apt-get install libblas-dev liblapack-dev
 
 The source code, manual and examples can be obtained from:
 
-<https://github.com/mperezenciso/pSBVB>
 <https://github.com/lauzingaretti/pSBVB>
 To compile:
 ```gfortran -O3 kind.f90 ALliball.f90 aux_sub11.f90 pSBVB.f90 -o sbvb -lblas ```
@@ -62,9 +61,6 @@ To run (assuming```.gen```  file is compressed):
 
 Where ```sbvb.par``` is the parameter file (details follow). The intermediate steps are simply for **pSBVB** to read genotypes in suitable format, that is,
 
-**allele1_snp1_ind1 allele2_snp1_ind1 allele3_snp1_ind1 ... alleleh_snp1_ind1 allele1_snp1_ind2 allele2_snp1_ind2 allele3_snp1_ind2 ... alleleh_snp1_ind2**
-
-**allele1_snp2_ind1 allele2_snp2_ind1 allele3_snp2_ind1 ... alleleh_snp2_ind1 allele1_snp2_ind2 allele2_snp2_ind2 allele3_snp2_ind2 ... alleleh_snp2_indp**
 
 with alleles coded as _0/1_. To run the program with the same random seed:
 
@@ -85,8 +81,6 @@ chip.test
 
 which specifies that the pedigree file is 'test.ped',SNPs are in testSnp and chip are in chip.test.
 
-For a complete help, check the manual file, and file [manual.sbvb]  ( https://github.com/lauzingaretti/pSBVB/blob/master/src/README.sbvb)...
-
 ## Requirements
 
 1.Mandatory Input files
@@ -97,7 +91,7 @@ For a complete help, check the manual file, and file [manual.sbvb]  ( https://gi
 
 **SNPFILE:**  a file with a list of **SNP** positions in an array (up to 9 arrays can be analyzed simultaneously) [toy example] (https://github.com/lauzingaretti/pSBVB/blob/master/src/SNPfile)
 
-**PARFILE:**  file with parameter options, see manual file for more details. To model ploidy, parfile include  **PLOIDY** option. If **PLOIDY** is higher than 2, you can include **MIMICDIPLOID** option to calculate GRM matrix.
+**PARFILE:**  file with parameter options, see manual file for more details. To model ploidy, parfile include  **PLOIDY** option. If **PLOIDY** is higher than 2, you can include **MIMIC_DIPLOID** or **MIMIC_HAPLOID** option to calculate GRM matrix.
 
 2.Optional
 
@@ -148,12 +142,71 @@ See also the list of [contributors](https://github.com/your/project/contributors
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
-## Citation
+**Citation**
 
-L. Zingaretti, A. Monfort, M. Pérez-Enciso. 2018. Modeling and simulation tools for genomic selection in polyploid species: a case study in octoploid strawberry. Submitted.
+L. Zingaretti, A. Monfort, M. Pérez-Enciso. 2018. pSBVB: a versatile simulation tool to evaluate genomic selection in polyploid species. Manuscript submitted for publication.
 
-M. Perez-Enciso, N. Forneris, G. de los Campos, A. Legarra. An efficient new simulator predicts minimal advantage of full sequence for genomic prediction. Submitted.
+Pérez-Enciso, M., Forneris, N., de los Campos, G., & Legarra, A. (2016). Evaluating sequence-based genomic prediction with an efficient new simulator. Genetics, genetics-116.
 
+Appendix: full list of options in parameter file
+================================================
 
-* Repo owner or admin
-* Other community or team contact
+`NTRAIT` \#--&gt; specifies no. of traits (int, \[0\])
+
+`PLOIDY` \#--&gt; specifies ploidy (int, \[2\])
+
+`QTLFILE` !--&gt; file with qtl posns (chr& bp) add &dom effects can be defined in cols 3 & 4 (str)
+
+`PEDFILE` !--&gt; !--&gt; file name with pedigree (only integer numbers allowed, 0 for unknown) pedfile
+
+`SNPFILE` !--&gt; file with genotyped snps: chr, bp, can be repeated
+
+`MAPFILE` !--&gt;recomb map file: chr, basepos, cm2Mb \[cm2Mb\_sex2\]
+
+`HAPFILE` !--&gt; hap structure so program can be restarted with RESTART
+
+`OUTPLINK` !--&gt; prints mkr in plink tpedformat
+
+`OUTGFILE` !--&gt; GRM outfile
+
+`OUTQFILE` !--&gt; output qtl file out\_q\_file
+
+`OUTYFILE` !--&gt; y outfile outyfile
+
+`OUTMFILE` !--&gt; output file with mkr data
+
+outmfile
+
+`GZIP` !--&gt; compress output files
+
+`NBASE` !--&gt;nind which genotypes are read from `.vcf`or `.gen` file nbase
+
+`H2G` !--&gt; broad heritability, repeated if multiple traits
+
+`RHOQA` !--&gt; desired correlation between allele effect and frequency, repeated if multiple traits
+
+`SIGNQTN` !--&gt; P of derived allele being deleterious (only with gamma) \[0.5\]
+
+`QTLDISTA` !--&gt; QTL add effects are sampled from a distribution: u(niform), g(amma), n(ormal) \[u, l\_bound, u\_bound\] \[n, mu, var\] \[g, s, b\] ! repeated if multiple traits
+
+`QTLDISTD` !--&gt; QTL dom effects are sampled from a distribution \[u, l\_bound, u\_bound\] \[n, mu, var\] \[g, s, b\] ! repeated if multiple traits
+
+`CM2MB` !--&gt; cM to Mb rate, default cm2mb \[1.0\]
+
+`MXOVER` !--&gt; Max no xovers, default 3
+
+`RESTART` !--&gt; prepares files for new run of sbvb
+
+`RESTARTQTL` !--&gt; restart qtl effects but keeps haplotype structure
+
+`NOPRINTHAP` !--&gt; does not print hap file, eg, if no new haplotypes have been generated
+
+`NOSEQUENCE` !--&gt; does not use sequence for GRM,
+
+`EXPAND_BASEPOP` !--&gt; breeds new base individuals involving random mating for ntgen generations ! from nfam families
+
+`ALLOPOLYPLOID` !--&gt; if PLOIDY is higher than 2 and you want to simulate an allopolyploid organism.
+
+`MIMIC_DIPLOID` !--&gt; this option assumes than only presence or absence of the alternative allele can be ascertained for genotypes’ values higher than 2 (only should be on if organism is polyploid)
+
+`MIMIC_HAPLOID` !--&gt; Assuming that only one allele can be distinguished for the others, i.e., that a given marker allele behaves as fully dominant.
