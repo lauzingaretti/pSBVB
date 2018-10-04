@@ -10,7 +10,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<meta name="author" content="M Pérez Enciso, Laura Zingaretti" />
+ <p style="color:white;">
+        <p align="center"> Miguel Pérez-Enciso, Laura Zingaretti</p>
+      <p align="center">miguel.perez@uab.es, laura.zingaretti@cragenomica.es</p>
+ <p align="center">with input from Amparo Monfort </p>
 
 
 <title>pSBVB: polyploid Sequence Based Virtual Breeding</title>
@@ -141,10 +144,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>The program requires blas libraries but these are standard in any unix or OS mac system. We have tested pSBVB only in linux with gfortran compiler; intel ifort seems not working, but gfortran in mac OS looks ok.</p>
 <p><span style="color:#cc66ff; font-family:Georgia; font-weight: bold ">USAGE:</span></p>
 <p>To run: if you have a <code>.vcf</code> file</p>
-<pre class="r2"><code> file.vcf | pSBVB -isbvb.par</code></pre>
+<pre class="r2"><code> file.vcf | python3 vcf2gen.py pSBVB -isbvb.par</code></pre>
 <p>if you have a .gen file</p>
 <pre class="r2"><code> file.gen | pSBVB -isbvb.par</code></pre>
-<p>with alleles coded as <em>0/1</em>. In the gen file, the first two rows contain the chromosome and SNP position (in base pairs), and the following columns contain the genotypes (coded <em>0,1,…h</em>) for each of the individuals of the founder population. To run the program with the same random seed:</p>
+ <p>with alleles coded as <em>0/1</em>. In the gen file, the first two rows contain the chromosome and SNP position (in base pairs), and the following columns contain the genotypes (coded <em>0,1,…h</em>) for each of the individuals of the founder population. To run the program with the same random seed:</p>
 <pre class="r2"><code>… | pSBVB -isbvb.par –seed iseed</code></pre>
 <p>where iseed is an integer number</p>
 </div>
