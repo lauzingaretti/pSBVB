@@ -142,8 +142,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <pre class="r2"><code>sudo make install</code></pre>
 <p>The program requires blas libraries but these are standard in any unix or OS mac system. We have tested pSBVB only in linux with gfortran compiler; intel ifort seems not working, but gfortran in mac OS looks ok.</p>
 <p><span style="color:#cc66ff; font-family:Georgia; font-weight: bold ">USAGE:</span></p>
-<p>To run: if you have a <code>.vcf</code> file (file could be compress vcf.gz)</p>
-<pre class="r2"><code> file.vcf |python3 vcf2gen.py | pSBVB -isbvb.par</code></pre>
+<p>To run: if you have a <code>.vcf</code> file (file could be compress vcf.gz or genotypes, then (assuming that vcftogen.py is in your wd) :)</p>
+<pre class="r2"><code> python3 vcftogen.py -i File.vcf  -p Ploidy -o Genos.gen </code></pre>
+<pre class="r2"><code> Genos.gen | pSBVB -isbvb.par</code></pre>
+
 <p>if you have a .gen file</p>
 <pre class="r2"><code> file.gen | pSBVB -isbvb.par</code></pre>
 <p>with alleles coded as <em>0/1</em>. In the gen file, the first two rows contain the chromosome and SNP position (in base pairs), and the following columns contain the genotypes (coded <em>0,1,…h</em>) for each of the individuals of the founder population. To run the program with the same random seed:</p>
