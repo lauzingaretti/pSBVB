@@ -1,0 +1,61 @@
+#cd '/home/useradmin/Desktop/start psvb/' 
+#zcat GenosB.vcf.gz | perl vcf2tped2.pl -hap | cut -d ' ' -f 1,4- | sbvb -i sbvb.par
+#creo que no funciona la transformación con perl 
+#ahora veamos si funciona ya directamente con el gen 
+#cat  test.gen | sbvb -i sbvb.par 
+
+NOSEQUENCE
+
+PLOIDY
+8
+ALLOPLOIDY
+# RHOPLOIDY 
+# AQUI LE PODRÍA ESPECIFICAR LOS 
+
+NBASE     !--> nind which genotypes are read from STDIN 
+47
+
+
+RESTART
+
+HAPFILE
+sbvb.hap 
+
+EXPAND_BASEPOP
+5 10
+
+INDFIRST
+48
+
+#MIMIC_DIPLOID
+
+H2       !--> heritability for yearling weight 0.49 # JAS Knights et al., 1984
+0.5
+
+QTLDISTA  !--> QTL add effects are sampled from a distribution: u(niform), g(amma), n(ormal)   !--> g(mean 1, shape=0.2)
+g 0.2 0.2
+
+NTRAIT
+1
+
+MAXNCHR !--> max no. of chromosomes [23]
+7
+
+QTNFILE    
+YPathways.qtn
+
+PEDFILE    !--> The format is: id id_father id_mother [sex]
+Fin.ped
+
+SNPFILE  !--> file with genotyped snps: chr, bp
+chipBiallelic.chip
+
+#MAPFILE  !--> recomb map file: chr, basepos, cm2Mb [cm2Mb_sex2]
+
+OUTGFILE !--> GRM outfile
+Y.grm 
+OUTQFILE !--> output qtl file
+Y.outq
+OUTYFILE !--> y outfile
+Y.outy
+
