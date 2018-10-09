@@ -34,7 +34,7 @@ Main features
 Installation
 ============
 
-The source code, manual and examples can be obtained from <https://github.com/lzingaretti/pSBVB>
+The source code, manual and examples can be obtained from <https://github.com/lauzingaretti/pSBVB>
 
 To compile:
 
