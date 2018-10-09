@@ -8,28 +8,28 @@ NOSEQUENCE
 
 PLOIDY
 8
-
 ALLOPLOIDY
 
 # RHOPLOIDY 
-# AQUI LE PODRÍA ESPECIFICAR Las recombinaciones
-
+# AQUI LE PODRÍA ESPECIFICAR LOS 
 
 RESTART
-
-INDFIRST
-48
-
-#MIMIC_DIPLOID
+HAPFILE
+sbvb.hap 
 
 NBASE     !--> nind which genotypes are read from STDIN 
 47
 
-H2G       !--> heritability for yearling weight 0.49 # JAS Knights et al., 1984
-0.5
-
 EXPAND_BASEPOP
 5 10
+
+INDFIRST
+48
+
+MIMIC_DIPLOID
+
+H2G       !--> heritability for yearling weight 0.49 # JAS Knights et al., 1984
+0.5
 
 NTRAIT
 1
@@ -37,9 +37,8 @@ NTRAIT
 MAXNCHR !--> max no. of chromosomes [23]
 7
 
-QTNFILE 
-Y.qtn
-
+QTNFILE     
+YPathways.qtn
 
 PEDFILE    !--> The format is: id id_father id_mother [sex]
 Fin.ped
@@ -49,16 +48,10 @@ Data.chip
 
 #MAPFILE  !--> recomb map file: chr, basepos, cm2Mb [cm2Mb_sex2]
 
-
 OUTGFILE !--> GRM outfile
 Y.grm 
 OUTQFILE !--> output qtl file
 Y.outq
 OUTYFILE !--> y outfile
 Y.outy
-
-
-
-
-
 

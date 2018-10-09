@@ -8,17 +8,19 @@ NOSEQUENCE
 
 PLOIDY
 8
-
 ALLOPLOIDY
-
 # RHOPLOIDY 
-# AQUI LE PODRÍA ESPECIFICAR Las recombinaciones
+# AQUI LE PODRÍA ESPECIFICAR LOS 
+
+INDFIRST
+48
 
 
 RESTART
 
-INDFIRST
-48
+HAPFILE
+sbvb.hap 
+
 
 #MIMIC_DIPLOID
 
@@ -37,18 +39,18 @@ NTRAIT
 MAXNCHR !--> max no. of chromosomes [23]
 7
 
-QTNFILE 
+QTNFILE    
 Y.qtn
-
 
 PEDFILE    !--> The format is: id id_father id_mother [sex]
 Fin.ped
 
 SNPFILE  !--> file with genotyped snps: chr, bp
-Data.chip
+chipBiallelic.chip
+
+
 
 #MAPFILE  !--> recomb map file: chr, basepos, cm2Mb [cm2Mb_sex2]
-
 
 OUTGFILE !--> GRM outfile
 Y.grm 
@@ -56,9 +58,4 @@ OUTQFILE !--> output qtl file
 Y.outq
 OUTYFILE !--> y outfile
 Y.outy
-
-
-
-
-
 
