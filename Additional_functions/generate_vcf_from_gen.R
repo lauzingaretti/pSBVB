@@ -1,5 +1,7 @@
 
-# GBLUP MODEL (you could to use any output G from pSBVB)
+# function to generate "like- vcf file" from genotypes. Now you only need to execute the program using python based scripo
+# This function is not necessary. See software help from https://lauzingaretti.github.io/pSBVB/
+
 #' Funtion \code{GenotoVcf} 
 #' @param G matrix with genotypes, ind in rows, markers in columns. Note that colnames should be SNPs names. File should be include cols and rowsnames
 #' @param p ploidy level
@@ -67,7 +69,7 @@ GenotoVcf <- function(G,p=2,map,path="NULL"){
   
 }
 
-
+###Aux function####
 Auxily<-function(A,p){
 M<-c()
 for(i in 1:length(A)){
