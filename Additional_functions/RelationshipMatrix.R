@@ -1,15 +1,14 @@
-#generate relationship matrix (see to incorporate ploidy levels, because there are some papers which developed a computation to incorporate ploidy level into relationship matrix)
+#'Function to generate Relationship based matrix 
 
 #'Funtion \code{RelMatrix} 
-#' Creates a additive relationship matrix A from a pedigree data in a 3-column way format based on ploidy level (an even number) and, if ploidy equals 4, based on proportion of parental gametes that are IBD (Identical by Descent) due to double reduction. Returns a dominance relationship matrix if dominance true (ploidy 2 only). Autopolyploid matrices based on Kerr (2012). Construction is based on the Henderson's recursive method described in Mrode (2005).
-#'
-#' @param data pedigree data with 3 column.Unknown are equal to zero. The first column is the individual index, the second the father and the last, the mather 
+#' Creates a additive relationship matrix A from a pedigree data (ped file)
+
+#' @param data pedigree data with 3 column. Unknown are equal to zero. See pedigree function to more info. 
 #' @param dominance if true, returns the dominance relationship matrix
 #' @param path path to save the file. Default is NULL
-#' #####param slater if true, returns the additive autotetraploid relationship matrix as Slater (2013)
-#' 
-#' @return Matrix with the Relationship between the individuals.
-#'
+
+#' @return Matrix with the Numerator Relationship Matrix. 
+
 
 
 RelMatrix <- function(data = NULL, dominance=FALSE,path=NULL){
@@ -29,7 +28,7 @@ RelMatrix <- function(data = NULL, dominance=FALSE,path=NULL){
   A <- matrix(NA,ncol=n,nrow=n)
   diag(A)<-1
 
-  Time = proc.time()
+
 
 
     for(j in 1:(n-1)){
@@ -53,7 +52,6 @@ RelMatrix <- function(data = NULL, dominance=FALSE,path=NULL){
  
  
   if(dominance){
-    cat("Constructing dominance relationship matrix \n")
     DR <- matrix(NA,ncol=n,nrow=n)
     diag(DR)<-1
     for(j in 1:(n-1)){
@@ -85,7 +83,3 @@ RelMatrix <- function(data = NULL, dominance=FALSE,path=NULL){
   return(A)   
 }
 
-data<-read.table("~/Dropbox/DoctoradoCRAG/paper-1/article/software-help/reversinn1/pSBVB/toy_strawberry/Additional_functions/File_st.ped",header=FALSE)
-#check the dimensions of dataset 
-dim(data)
-RelMatrix(data,dominance=FALSE,path= "~/Dropbox/DoctoradoCRAG/paper-1/article/software-help/reversinn1/pSBVB/toy_strawberry/Additional_functions/")
