@@ -1,8 +1,7 @@
-#generate pedigree function 
-#id id_father id_mother [sex] (optional)
+#Function to Generate a random Pedigree  
+#id id_father id_mother [sex] (optional) (to plant breeding, this option is not useful)
 #sex is 1 to males and 2 to females 
-#this function could be created a ped file with any founders, optional sex
-#father 
+
 #'Funtion \code{PedGenerator} 
 #'This function is use to make a Pedigree file 
 #'@param nfounder number of founders individuals for the population  
@@ -108,6 +107,6 @@ write.table(pedigree,"File_st.ped",sep="\t",col.names = FALSE, row.names=FALSE,
   return(A)          
 
 }
-#
-# pedgenerator(100,4,c(rep(100,3),150),sex=FALSE,path="~/Dropbox/DoctoradoCRAG/paper-1/article/software-help/reversinn1/pSBVB/toy_strawberry/Additional_functions"
+# Usage:
+# pedgenerator(100,4,c(rep(100,3),150),sex=FALSE,path="Path-to-file"
 # ,exclude=47)
