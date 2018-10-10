@@ -1,18 +1,17 @@
 # GBLUP MODEL (you could to use any output G from pSBVB)
 #' Funtion \code{GBlup_predict} 
-#' @param G Genomic Relationship Matrix  
+#' @param G Genomic Relationship Matrix (any of standar G output from pSBVB)
 #' @param y phenotypes file (from pSBVB output)
-#' @param ntraits how many traits do you have in dataset? 
+#' @param make_predictions index of individuals which you want to made predictions or proportion (split dataset between test/train)
 #' @param h2 heredability (if ntraits is higher than one, it should be a vector of length = ntraits)
-#' @param make_predictions index of individuals which you want to made predictions or proportion of values to predict  
-#' #####param slater if true, returns the additive autotetraploid relationship matrix as Slater (2013) 
-#' 
+#' @param ntraits how many traits has been simulated? You can run the model to all traits simultaneosly
+
 #' @return 
 #' @param rhoM Predictive Ability 
-#' @param uhat Estimated u. 
-#' @param yout_corr Phenotype with corrected heredability 
+#' @param uhat Estimated u values. 
+#' @param yout_corr Phenotype with corrected by heritability parameter (h2)
 #' @param yout Orignal phenotype 
-#' @param mean Model estimated mean
+#' @param mean Mean estimated by model. 
 #' @author M L Zingaretti 
 
 
@@ -99,9 +98,8 @@ GBlup_pred<-function(G,y,h2,miss){
   
 
 
-#Addtional functions 
+#######Aux########### 
 
-#functions that I needed 
 Heredabilidad<-function(Ad_ef,Phen){
   Hered<-var(Ad_ef)/var(Phen)
   return("Heredabilidad"=Hered)
