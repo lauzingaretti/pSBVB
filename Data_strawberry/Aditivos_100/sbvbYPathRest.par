@@ -29,7 +29,7 @@ INDFIRST
 
 #MIMIC_DIPLOID
 
-H2       !--> heritability for yearling weight 0.49 # JAS Knights et al., 1984
+H2G       !--> heritability for yearling weight 0.49 # JAS Knights et al., 1984
 0.5
 
 QTLDISTA  !--> QTL add effects are sampled from a distribution: u(niform), g(amma), n(ormal)   !--> g(mean 1, shape=0.2)
