@@ -1,4 +1,4 @@
-Done. The reference Elshire et al. 2011 was misplaced, it just refers to method, not to the center was libraries were done# GBLUP MODEL (you could to use any output G from pSBVB)
+# GBLUP MODEL (you could to use any output G from pSBVB)
 #' Funtion \code{GBlup_predict} 
 #' @param G Genomic Relationship Matrix (any of standar G output from pSBVB)
 #' @param y phenotypes file (from pSBVB output)
