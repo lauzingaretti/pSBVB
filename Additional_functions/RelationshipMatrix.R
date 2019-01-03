@@ -20,10 +20,12 @@ RelMatrix <- function(data = NULL, dominance=FALSE,path=NULL){
   
   if( is.null(s) || is.null(d) )
     stop(deparse("Please define a validate pedigree file"))
-  
+ 
+  '''
   if( !is.numeric(s) || !is.numeric(d) )
     stop(deparse("Pleasy verify your dataset because the pedigree must be numeric"))
-  
+  '''
+
   n <- length(s)
   A <- matrix(NA,ncol=n,nrow=n)
   diag(A)<-1
